@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskBuddies v7 — Get It Done in Pakistan</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --em:#00d4a0;--em-dark:#00a87e;--em-light:#33ddb3;
+  --em-glow:rgba(0,212,160,0.2);--em-ultra:rgba(0,212,160,0.07);
+  --bg:#080e0b;--bg2:#0c1410;--bg3:#101a15;
+  --surface:#121c17;--surface2:#182419;--surface3:#1e2e22;
+  --border:rgba(0,212,160,0.12);--border2:rgba(0,212,160,0.22);--border3:rgba(0,212,160,0.38);
+  --text:#edfaf4;--text2:#9ecfb8;--text3:#5fa082;--text4:#3a6652;
+  --white:#fff;--black:#000;
+  --red:#f03e3e;--red-bg:rgba(240,62,62,0.1);
+  --amber:#f59f00;--amber-bg:rgba(245,159,0,0.1);
+  --blue:#339af0;--blue-bg:rgba(51,154,240,0.1);
+  --r:10px;--r2:16px;--r3:24px;
+  --tr:all 0.25s ease;
+  --shadow:0 4px 32px rgba(0,0,0,0.5);
+}
+[data-theme="light"]{
+  --bg:#f4fdf8;--bg2:#ebfaf2;--bg3:#e0f5ea;
+  --surface:#ffffff;--surface2:#f0fdf7;--surface3:#d9f5e8;
+  --border:rgba(0,168,126,0.18);--border2:rgba(0,168,126,0.3);--border3:rgba(0,168,126,0.5);
+  --text:#062b1a;--text2:#0d5a38;--text3:#1a7a50;--text4:#9ecfb8;
+  --shadow:0 4px 24px rgba(0,0,0,0.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;background:rgba(8,14,11,0.9);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+[data-theme="light"] nav{background:rgba(244,253,248,0.92)}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none}
+.logo-mark{width:36px;height:36px;border-radius:10px;background:var(--em);display:flex;align-items:center;justify-content:center}
+.logo-mark svg{width:20px;height:20px;fill:var(--black)}
+.logo-text{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:900;color:var(--text)}
+.logo-text span{color:var(--em)}
+.nav-links{display:flex;gap:4px}
+.nav-link{padding:7px 14px;border-radius:8px;font-size:0.85rem;font-weight:500;color:var(--text2);cursor:pointer;border:none;background:none;font-family:'Space Grotesk',sans-serif;transition:var(--tr)}
+.nav-link:hover{color:var(--em);background:var(--em-ultra)}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.btn-nav{padding:7px 18px;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;transition:var(--tr)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}
+.btn-ghost:hover{border-color:var(--em);color:var(--em)}
+.btn-em-sm{background:var(--em);color:#000;border:none;font-weight:700}
+.btn-em-sm:hover{background:var(--em-light);transform:translateY(-1px)}
+.theme-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;font-size:0.95rem;display:flex;align-items:center;justify-content:center;transition:var(--tr)}
+.theme-btn:hover{border-color:var(--em)}
+.user-chip{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:50px;border:1px solid var(--border2);background:var(--surface);cursor:pointer;transition:var(--tr)}
+.user-chip:hover{border-color:var(--em)}
+.u-av{width:28px;height:28px;border-radius:50%;background:var(--em);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:#000}
+.u-name{font-size:0.82rem;font-weight:600;color:var(--text)}
+
+/* PAGES */
+.page{display:none;min-height:100vh;padding-top:64px;animation:fadeUp 0.35s ease}
+.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:var(--r);border:none;font-family:'Space Grotesk',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:var(--tr)}
+.btn-primary{background:var(--em);color:#000}
+.btn-primary:hover{background:var(--em-light);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--em);border:1.5px solid var(--em)}
+.btn-outline:hover{background:var(--em-ultra)}
+.btn-subtle{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-subtle:hover{border-color:var(--em);color:var(--em)}
+.btn-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,62,62,0.25)}
+.btn-full{width:100%;justify-content:center}
+.btn-sm{padding:8px 16px;font-size:0.8rem}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:50px;font-size:0.73rem;font-weight:700;letter-spacing:0.02em}
+.badge-em{background:var(--em-ultra);color:var(--em);border:1px solid var(--border)}
+.badge-green{background:rgba(34,197,94,0.1);color:#22c55e;border:1px solid rgba(34,197,94,0.2)}
+.badge-amber{background:var(--amber-bg);color:var(--amber);border:1px solid rgba(245,159,0,0.2)}
+.badge-red{background:var(--red-bg);color:var(--red);border:1px solid rgba(240,62,62,0.2)}
+.badge-blue{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(51,154,240,0.2)}
+.badge-gray{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:24px;transition:var(--tr);position:relative;overflow:hidden}
+.card:hover{border-color:var(--border2)}
+.card-sm{padding:16px;border-radius:var(--r)}
+
+/* FORMS */
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:0.78rem;font-weight:700;color:var(--text3);margin-bottom:7px;text-transform:uppercase;letter-spacing:0.06em}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:0.9rem;outline:none;transition:var(--tr)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--em);box-shadow:0 0 0 3px var(--em-ultra)}
+.form-group textarea{resize:vertical;min-height:90px;line-height:1.5}
+.form-group select option{background:var(--surface)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-hint{font-size:0.76rem;color:var(--text4);margin-top:5px}
+.divider{height:1px;background:var(--border);margin:18px 0}
+
+/* SECTIONS */
+.section{padding:80px 2rem}
+.section-inner{max-width:1180px;margin:0 auto}
+.eyebrow{font-size:0.75rem;font-weight:700;color:var(--em);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';width:20px;height:2px;background:var(--em);border-radius:2px}
+.section-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;line-height:1.15;color:var(--text);margin-bottom:14px}
+.section-title .em{color:var(--em)}
+.section-sub{font-size:1rem;color:var(--text2);line-height:1.75;max-width:560px}
+
+/* HERO */
+.hero{min-height:calc(100vh - 64px);display:flex;align-items:center;padding:60px 2rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-glow{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none}
+.hero-glow-1{width:480px;height:480px;background:radial-gradient(circle,rgba(0,212,160,0.1),transparent);top:-120px;right:-80px;animation:pulse 7s ease-in-out infinite}
+.hero-glow-2{width:360px;height:360px;background:radial-gradient(circle,rgba(0,212,160,0.06),transparent);bottom:-60px;left:-60px;animation:pulse 9s ease-in-out infinite 3s}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:52px 52px;opacity:0.25}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.hero-inner{max-width:1180px;margin:0 auto;position:relative;z-index:1;display:grid;grid-template-columns:1.15fr 1fr;gap:72px;align-items:center;width:100%}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border2);border-radius:50px;padding:7px 16px 7px 10px;margin-bottom:24px}
+.hero-dot{width:7px;height:7px;border-radius:50%;background:var(--em);animation:blink 1.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero-tag span{font-size:0.8rem;font-weight:600;color:var(--text2)}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2.4rem,4.5vw,3.6rem);font-weight:900;line-height:1.08;color:var(--text);margin-bottom:20px}
+.hero h1 .em{color:var(--em)}
+.hero p{font-size:1.05rem;color:var(--text2);line-height:1.8;margin-bottom:32px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:24px;margin-top:40px;padding-top:24px;border-top:1px solid var(--border)}
+.hs-val{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;color:var(--em)}
+.hs-lbl{font-size:0.76rem;color:var(--text4);margin-top:1px}
+.hs-sep{width:1px;background:var(--border)}
+.live-board{background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);padding:22px;box-shadow:var(--shadow)}
+.live-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.live-hd-title{font-family:'Fraunces',serif;font-weight:700;font-size:0.9rem;color:var(--text)}
+.live-badge{display:flex;align-items:center;gap:5px;font-size:0.75rem;font-weight:700;color:var(--em)}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--em);animation:blink 1.4s infinite}
+.task-pill{display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--r);background:var(--surface2);border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:var(--tr)}
+.task-pill:hover{border-color:var(--em);transform:translateX(3px)}
+.task-ico{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;background:var(--surface3)}
+.task-pi{flex:1;min-width:0}
+.task-ptitle{font-size:0.83rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.task-pmeta{font-size:0.72rem;color:var(--text4);margin-top:2px}
+.task-ppay{font-size:0.85rem;font-weight:800;color:var(--em);white-space:nowrap}
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.ms{background:var(--bg);border-radius:var(--r);padding:10px;text-align:center;border:1px solid var(--border)}
+.ms-v{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;color:var(--em)}
+.ms-l{font-size:0.68rem;color:var(--text4);margin-top:1px}
+
+/* HOW */
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:52px;position:relative}
+.how-line{position:absolute;top:40px;left:calc(12.5% + 20px);right:calc(12.5% + 20px);height:1.5px;background:linear-gradient(to right,var(--em),var(--em-dark))}
+.how-step{text-align:center;position:relative;z-index:1}
+.how-num{width:80px;height:80px;border-radius:50%;border:1.5px solid var(--em);background:var(--surface);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.how-num span{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:var(--em)}
+.how-icon{font-size:1.6rem;margin-bottom:12px;display:block}
+.how-step h3{font-family:'Fraunces',serif;font-weight:700;margin-bottom:8px;color:var(--text);font-size:0.95rem}
+.how-step p{font-size:0.82rem;color:var(--text2);line-height:1.6}
+
+/* CAT GRID */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+.cat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:24px 18px;text-align:center;cursor:pointer;transition:var(--tr)}
+.cat-card:hover{border-color:var(--em);transform:translateY(-3px);box-shadow:0 8px 32px var(--em-glow)}
+.cat-icon{font-size:1.8rem;display:block;margin-bottom:12px;transition:var(--tr)}
+.cat-card:hover .cat-icon{transform:scale(1.12)}
+.cat-name{font-family:'Fraunces',serif;font-weight:700;font-size:0.9rem;color:var(--text);margin-bottom:4px}
+.cat-count{font-size:0.73rem;color:var(--text4)}
+
+/* JOBS PAGE */
+.page-hd{background:var(--surface);border-bottom:1px solid var(--border);padding:28px 2rem}
+.page-hd-inner{max-width:1180px;margin:0 auto}
+.page-hd h1{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:900;color:var(--text);margin-bottom:4px}
+.page-hd p{font-size:0.86rem;color:var(--text2)}
+.search-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.sw{flex:1;min-width:180px;position:relative}
+.sw .si{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:0.9rem}
+.sw input{width:100%;padding:10px 14px 10px 38px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:0.88rem;outline:none;transition:var(--tr)}
+.sw input:focus{border-color:var(--em)}
+.sel{padding:10px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:0.85rem;outline:none;cursor:pointer}
+.sel option{background:var(--surface)}
+.jobs-layout{max-width:1180px;margin:24px auto;padding:0 2rem;display:grid;grid-template-columns:240px 1fr;gap:20px}
+.sidebar{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:20px;height:fit-content;position:sticky;top:80px}
+.sb-title{font-family:'Fraunces',serif;font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:14px}
+.fg{margin-bottom:20px}
+.fg-t{font-size:0.7rem;font-weight:700;color:var(--text4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px}
+.fi{display:flex;align-items:center;gap:8px;padding:6px 0;cursor:pointer}
+.fi input{accent-color:var(--em)}
+.fi label{font-size:0.85rem;color:var(--text2);cursor:pointer}
+.fi:hover label{color:var(--em)}
+.jobs-feed{display:flex;flex-direction:column;gap:12px}
+.job-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:22px;cursor:pointer;transition:var(--tr);position:relative;overflow:hidden}
+.job-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent;transition:var(--tr);border-radius:4px 0 0 4px}
+.job-card:hover{border-color:var(--border2);box-shadow:0 4px 24px var(--em-glow);transform:translateY(-2px)}
+.job-card:hover::before{background:var(--em)}
+.jc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;gap:12px}
+.jc-left{display:flex;align-items:center;gap:12px}
+.j-ico{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:var(--surface2);border:1px solid var(--border);flex-shrink:0}
+.j-h3{font-family:'Fraunces',serif;font-weight:700;font-size:0.98rem;color:var(--text);margin-bottom:3px}
+.j-by{font-size:0.78rem;color:var(--text4)}
+.j-desc{font-size:0.83rem;color:var(--text2);line-height:1.6;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.j-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.j-tag{background:var(--surface2);color:var(--text2);border:1px solid var(--border);padding:3px 10px;border-radius:50px;font-size:0.75rem;font-weight:500}
+.j-footer{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--border)}
+.j-pay{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;color:var(--em)}
+.j-meta-row{display:flex;align-items:center;gap:10px}
+.j-meta{font-size:0.75rem;color:var(--text4)}
+.empty-state{text-align:center;padding:70px 20px;color:var(--text4)}
+.es-icon{font-size:3rem;display:block;margin-bottom:14px}
+
+/* POST PAGE */
+.post-wrap{max-width:740px;margin:0 auto;padding:36px 2rem}
+.post-hd{margin-bottom:28px}
+.post-hd h1{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:var(--text);margin-bottom:4px}
+.step-nav{display:flex;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:4px;margin-bottom:28px}
+.sp-btn{flex:1;padding:9px;border:none;background:transparent;color:var(--text4);font-family:'Space Grotesk',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;border-radius:8px;transition:var(--tr)}
+.sp-btn.active{background:var(--em);color:#000}
+.sp-btn.done{color:var(--em)}
+.type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.type-opt{padding:16px;border-radius:var(--r);border:1.5px solid var(--border);background:var(--surface2);cursor:pointer;transition:var(--tr);text-align:center}
+.type-opt:hover{border-color:var(--border2)}
+.type-opt.sel{border-color:var(--em);background:var(--em-ultra)}
+.type-icon{font-size:1.5rem;margin-bottom:7px;display:block}
+.type-title{font-weight:700;font-size:0.85rem;color:var(--text)}
+.type-sub{font-size:0.72rem;color:var(--text4);margin-top:3px}
+.preview-box{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r2);padding:22px;margin-bottom:20px}
+.preview-note{background:var(--amber-bg);border:1px solid rgba(245,159,0,0.2);border-radius:var(--r);padding:12px 16px;font-size:0.82rem;color:var(--amber);margin-bottom:18px}
+
+/* DASHBOARD */
+.dash-wrap{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 64px)}
+.dash-side{background:var(--surface);border-right:1px solid var(--border);padding:22px 0}
+.ds-profile{padding:0 18px 18px;margin-bottom:6px;border-bottom:1px solid var(--border)}
+.ds-av{width:50px;height:50px;border-radius:50%;background:var(--em);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#000;margin-bottom:10px}
+.ds-name{font-family:'Fraunces',serif;font-weight:700;font-size:0.92rem;color:var(--text);margin-bottom:3px}
+.ds-role{font-size:0.75rem;color:var(--text4)}
+.ds-section{padding:5px 18px;font-size:0.68rem;font-weight:700;color:var(--text4);text-transform:uppercase;letter-spacing:0.08em;margin-top:10px}
+.ds-item{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;font-size:0.86rem;font-weight:600;color:var(--text2);border-left:3px solid transparent;transition:var(--tr)}
+.ds-item:hover{color:var(--em);background:var(--em-ultra)}
+.ds-item.active{color:var(--em);background:var(--em-ultra);border-left-color:var(--em)}
+.ds-icon{font-size:1rem;width:18px;text-align:center}
+.dash-main{background:var(--bg2);padding:28px;overflow-y:auto}
+.dash-hd{margin-bottom:24px}
+.dash-hd h1{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:var(--text);margin-bottom:3px}
+.dash-hd p{font-size:0.84rem;color:var(--text4)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:18px;transition:var(--tr)}
+.metric:hover{border-color:var(--border2)}
+.m-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:12px}
+.m-val{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:var(--text);margin-bottom:3px;line-height:1}
+.m-lbl{font-size:0.75rem;color:var(--text4)}
+.m-change{font-size:0.72rem;color:var(--em);margin-top:3px}
+.two-col{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:16px}
+.section-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:20px;margin-bottom:16px}
+.section-card h3{font-family:'Fraunces',serif;font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.section-card h3 a{font-size:0.75rem;font-weight:500;color:var(--em);cursor:pointer;text-decoration:none}
+.app-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.app-item:last-child{border-bottom:none}
+.app-av{width:34px;height:34px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:var(--em);flex-shrink:0}
+.app-info{flex:1;min-width:0}
+.app-name{font-size:0.85rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-sub{font-size:0.72rem;color:var(--text4);margin-top:2px}
+.earn-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)}
+.earn-row:last-child{border-bottom:none}
+.earn-lbl{font-size:0.85rem;color:var(--text2)}
+.earn-val{font-weight:700;color:var(--em)}
+.pb{background:var(--surface2);height:6px;border-radius:3px;overflow:hidden;margin-top:6px}
+.pbf{height:100%;border-radius:3px;background:linear-gradient(to right,var(--em),var(--em-light));transition:width 1s ease}
+
+/* ADMIN */
+.admin-wrap{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 64px)}
+.admin-side{background:#060a07;border-right:1px solid rgba(255,255,255,0.06);padding:22px 0}
+.admin-side .ds-item{color:rgba(255,255,255,0.4)}
+.admin-side .ds-item:hover{color:var(--em);background:rgba(0,212,160,0.07)}
+.admin-side .ds-item.active{color:var(--em);background:rgba(0,212,160,0.09);border-left-color:var(--em)}
+.admin-side .ds-section{color:rgba(255,255,255,0.18)}
+.admin-side .ds-name{color:#fff}
+.admin-main{background:var(--bg);padding:28px;overflow-y:auto}
+.admin-table{width:100%;border-collapse:separate;border-spacing:0 5px}
+.admin-table thead th{padding:8px 14px;text-align:left;font-size:0.72rem;font-weight:700;color:var(--text4);text-transform:uppercase;letter-spacing:0.06em}
+.admin-table tbody td{padding:12px 14px;background:var(--surface);font-size:0.83rem;color:var(--text2)}
+.admin-table tbody td:first-child{border-radius:var(--r) 0 0 var(--r)}
+.admin-table tbody td:last-child{border-radius:0 var(--r) var(--r) 0}
+.admin-table tbody tr:hover td{background:var(--surface2)}
+.act-btn{padding:4px 12px;border-radius:7px;border:none;font-size:0.75rem;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:var(--tr);margin-right:4px}
+.act-a{background:rgba(0,212,160,0.12);color:var(--em)}
+.act-r{background:var(--red-bg);color:var(--red)}
+.act-v{background:var(--blue-bg);color:var(--blue)}
+
+/* PAYMENT */
+.pm-tabs{display:flex;gap:10px;margin-bottom:22px}
+.pm-tab{flex:1;padding:14px;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;text-align:center;transition:var(--tr);background:var(--surface2)}
+.pm-tab:hover{border-color:var(--border2)}
+.pm-tab.active{border-color:var(--em);background:var(--em-ultra)}
+.pm-tab-icon{font-size:1.3rem;display:block;margin-bottom:5px}
+.pm-tab-name{font-size:0.78rem;font-weight:700;color:var(--text)}
+.wallet-card{background:linear-gradient(135deg,#00875a,#004d38,#001f18);border-radius:var(--r2);padding:26px;color:#fff;margin-bottom:18px;position:relative;overflow:hidden}
+.wallet-card::before{content:'';position:absolute;top:-50px;right:-50px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,0.05)}
+.wallet-lbl{font-size:0.76rem;opacity:0.65;margin-bottom:6px;position:relative;z-index:1}
+.wallet-bal{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:900;position:relative;z-index:1}
+.wallet-sub{font-size:0.72rem;opacity:0.45;margin-top:4px;position:relative;z-index:1}
+.sum-item{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:0.85rem}
+.sum-item:last-child{border-bottom:none}
+
+/* MODALS */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeOv 0.2s ease}
+@keyframes fadeOv{from{opacity:0}to{opacity:1}}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--r3);padding:36px;width:100%;max-width:460px;box-shadow:var(--shadow);position:relative;animation:modalIn 0.28s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes modalIn{from{opacity:0;transform:scale(0.93) translateY(18px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text4);font-size:0.9rem;transition:var(--tr)}
+.modal-close:hover{border-color:var(--em);color:var(--em)}
+.modal h2{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:var(--text);margin-bottom:5px}
+.modal-sub{font-size:0.85rem;color:var(--text4);margin-bottom:24px}
+.modal-tabs{display:flex;gap:0;background:var(--surface2);border-radius:var(--r);padding:4px;margin-bottom:22px}
+.modal-tab{flex:1;padding:8px;border:none;background:transparent;color:var(--text4);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;border-radius:8px;transition:var(--tr)}
+.modal-tab.active{background:var(--surface);color:var(--em);box-shadow:var(--shadow)}
+.social-btn{width:100%;padding:11px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface2);cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:0.88rem;font-weight:600;color:var(--text2);display:flex;align-items:center;justify-content:center;gap:9px;transition:var(--tr);margin-bottom:9px}
+.social-btn:hover{border-color:var(--em);color:var(--em)}
+.div-text{text-align:center;color:var(--text4);font-size:0.76rem;margin:12px 0;position:relative}
+.div-text::before,.div-text::after{content:'';position:absolute;top:50%;width:43%;height:1px;background:var(--border)}
+.div-text::before{left:0}.div-text::after{right:0}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.role-opt{padding:14px;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;text-align:center;transition:var(--tr);background:var(--surface2)}
+.role-opt:hover{border-color:var(--border2)}
+.role-opt.selected{border-color:var(--em);background:var(--em-ultra)}
+.role-icon{font-size:1.5rem;display:block;margin-bottom:7px}
+.role-title{font-weight:700;font-size:0.88rem;color:var(--text)}
+.role-sub{font-size:0.72rem;color:var(--text4);margin-top:3px}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:12px 18px;border-radius:var(--r);font-size:0.85rem;font-weight:600;z-index:9999;display:flex;align-items:center;gap:9px;box-shadow:var(--shadow);animation:toastIn 0.3s cubic-bezier(0.34,1.56,0.64,1);max-width:340px}
+.toast.success{border-color:var(--em);background:var(--em-ultra);color:var(--em)}
+.toast.error{border-color:var(--red);background:var(--red-bg);color:var(--red)}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:50px 2rem 28px}
+.footer-inner{max-width:1180px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:40px}
+.footer-brand p{font-size:0.85rem;color:var(--text2);line-height:1.7;margin-top:12px;max-width:240px}
+.footer-col h4{font-size:0.72rem;font-weight:700;color:var(--text4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px}
+.footer-col a{display:block;font-size:0.85rem;color:var(--text2);text-decoration:none;margin-bottom:9px;cursor:pointer;transition:color 0.2s}
+.footer-col a:hover{color:var(--em)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text4)}
+
+/* CTA */
+.cta-wrap{background:linear-gradient(135deg,#00563d,#003327,#000);padding:70px 2rem;position:relative;overflow:hidden}
+.cta-inner{max-width:640px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.cta-inner h2{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:900;color:#fff;margin-bottom:14px}
+.cta-inner p{font-size:1rem;color:rgba(255,255,255,0.7);margin-bottom:30px;line-height:1.7}
+.btn-white{background:#fff;color:#003327;font-weight:800}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.25)}
+
+/* PKR label */
+.pkr-tag{font-size:0.65rem;background:rgba(0,212,160,0.12);color:var(--em);border:1px solid var(--border);border-radius:4px;padding:2px 6px;margin-left:4px;font-weight:700;vertical-align:middle}
+
+/* ALERTS */
+.alert{border-radius:var(--r);padding:12px 16px;font-size:0.82rem;margin-bottom:16px}
+.alert-amber{background:var(--amber-bg);border:1px solid rgba(245,159,0,0.2);color:var(--amber)}
+.alert-green{background:rgba(0,212,160,0.08);border:1px solid var(--border);color:var(--em)}
+.hidden{display:none!important}
+.modal-wide{max-width:520px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a class="logo" onclick="goto('home')">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/></svg>
+    </div>
+    <span class="logo-text">Task<span>Buddies</span></span>
+  </a>
+  <div class="nav-links">
+    <button class="nav-link" onclick="goto('jobs')">Browse Tasks</button>
+    <button class="nav-link" onclick="requireAuth(()=>goto('post'))">Post a Task</button>
+    <button class="nav-link" onclick="scrollHow()">How It Works</button>
+    <button class="nav-link hidden" id="dashNavBtn" onclick="goto('dashboard')">Dashboard</button>
+  </div>
+  <div class="nav-actions">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    <div id="guestNav">
+      <button class="btn-nav btn-ghost" onclick="openModal('login')">Sign In</button>
+      <button class="btn-nav btn-em-sm" onclick="openModal('signup')">Get Started</button>
+    </div>
+    <div id="userNav" class="hidden" style="display:flex;align-items:center;gap:8px">
+      <div class="user-chip" onclick="goto('dashboard')">
+        <div class="u-av" id="navAv">TB</div>
+        <span class="u-name" id="navName">User</span>
+      </div>
+      <button class="btn-nav btn-ghost btn-sm" onclick="doLogout()">Sign Out</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ====== HOME ====== -->
+<div class="page active" id="page-home">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg">
+      <div class="hero-grid"></div>
+      <div class="hero-glow hero-glow-1"></div>
+      <div class="hero-glow hero-glow-2"></div>
+    </div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-tag">
+          <div class="hero-dot"></div>
+          <span>Pakistan's task marketplace — PKR only</span>
+        </div>
+        <h1>Any task.<br>Any skill.<br><span class="em">Get it done.</span></h1>
+        <p>TaskBuddies connects people who need things done with skilled workers across Pakistan. Post a task, get offers, pay only when complete.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="requireAuth(()=>goto('post'))">Post a Task</button>
+          <button class="btn btn-outline" onclick="goto('jobs')">Browse Tasks →</button>
+        </div>
+        <div class="hero-stats">
+          <div><div class="hs-val" id="heroOpen">0</div><div class="hs-lbl">Open Tasks</div></div>
+          <div class="hs-sep"></div>
+          <div><div class="hs-val" id="heroUsers">0</div><div class="hs-lbl">Members</div></div>
+          <div class="hs-sep"></div>
+          <div><div class="hs-val">PKR</div><div class="hs-lbl">Currency</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="live-board">
+          <div class="live-hd">
+            <div class="live-hd-title">Live Task Board</div>
+            <div class="live-badge"><div class="live-dot"></div>Live</div>
+          </div>
+          <div id="liveTasksFeed"></div>
+          <div class="mini-stats">
+            <div class="ms"><div class="ms-v" id="msOpen">0</div><div class="ms-l">Open</div></div>
+            <div class="ms"><div class="ms-v">PKR</div><div class="ms-l">Currency</div></div>
+            <div class="ms"><div class="ms-v">4.8★</div><div class="ms-l">Rating</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="eyebrow">All Categories</div>
+      <div class="section-title">Any kind of task. <span class="em">Really.</span></div>
+      <p class="section-sub">From Lahore to Karachi — skilled trades to digital work. Any human task, we connect you.</p>
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section" id="how-section">
+    <div class="section-inner">
+      <div class="eyebrow">Simple Process</div>
+      <div class="section-title">Post. Pick. <span class="em">Pay.</span></div>
+      <div class="how-grid">
+        <div class="how-line"></div>
+        <div class="how-step"><div class="how-num"><span>1</span></div><span class="how-icon">📝</span><h3>Post Your Task</h3><p>Describe what you need. Set your PKR budget and deadline.</p></div>
+        <div class="how-step"><div class="how-num"><span>2</span></div><span class="how-icon">👀</span><h3>Review Offers</h3><p>Workers apply with their rate. Browse profiles and ratings.</p></div>
+        <div class="how-step"><div class="how-num"><span>3</span></div><span class="how-icon">🤝</span><h3>Pick Your Person</h3><p>Accept the best offer. Funds held until you're satisfied.</p></div>
+        <div class="how-step"><div class="how-num"><span>4</span></div><span class="how-icon">✅</span><h3>Approve & Pay</h3><p>Task done? Release payment via JazzCash or Bank Transfer.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section" style="background:var(--bg2)">
+    <div class="section-inner">
+      <div class="eyebrow">Why TaskBuddies</div>
+      <div class="section-title">Built for <span class="em">real work</span></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px">
+        <div class="card"><div style="font-size:1.6rem;margin-bottom:14px">🔒</div><h3 style="font-family:'Fraunces',serif;font-weight:700;margin-bottom:9px;color:var(--text)">Secure Escrow</h3><p style="font-size:0.84rem;color:var(--text2);line-height:1.65">Funds held safely. Released only when you approve. Both parties protected.</p></div>
+        <div class="card"><div style="font-size:1.6rem;margin-bottom:14px">💚</div><h3 style="font-family:'Fraunces',serif;font-weight:700;margin-bottom:9px;color:var(--text)">JazzCash & Bank</h3><p style="font-size:0.84rem;color:var(--text2);line-height:1.65">Pay and receive via JazzCash or local bank transfer. 100% PKR, no forex.</p></div>
+        <div class="card"><div style="font-size:1.6rem;margin-bottom:14px">⚡</div><h3 style="font-family:'Fraunces',serif;font-weight:700;margin-bottom:9px;color:var(--text)">Fast Matching</h3><p style="font-size:0.84rem;color:var(--text2);line-height:1.65">Most tasks receive offers within 24 hours from skilled local workers.</p></div>
+        <div class="card"><div style="font-size:1.6rem;margin-bottom:14px">⭐</div><h3 style="font-family:'Fraunces',serif;font-weight:700;margin-bottom:9px;color:var(--text)">Verified Reviews</h3><p style="font-size:0.84rem;color:var(--text2);line-height:1.65">Every rating comes from a completed task. No fake scores allowed.</p></div>
+        <div class="card"><div style="font-size:1.6rem;margin-bottom:14px">🌍</div><h3 style="font-family:'Fraunces',serif;font-weight:700;margin-bottom:9px;color:var(--text)">All of Pakistan</h3><p style="font-size:0.84rem;color:var(--text2);line-height:1.65">Karachi, Lahore, Islamabad, Peshawar — workers and posters from every city.</p></div>
+        <div class="card"><div style="font-size:1.6rem;margin-bottom:14px">📊</div><h3 style="font-family:'Fraunces',serif;font-weight:700;margin-bottom:9px;color:var(--text)">Full Dashboard</h3><p style="font-size:0.84rem;color:var(--text2);line-height:1.65">Track tasks, payments, and applications from one clean dashboard.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <div class="cta-inner">
+      <h2>Need something done today?</h2>
+      <p>Join TaskBuddies — Pakistan's growing task marketplace. Post in 3 minutes. Pay in PKR. No complexity.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-white" onclick="openModal('signup')">Get Started Free</button>
+        <button class="btn" style="background:rgba(255,255,255,0.12);color:#fff;border:1.5px solid rgba(255,255,255,0.25)" onclick="goto('jobs')">See Live Tasks →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo"><div class="logo-mark"><svg viewBox="0 0 24 24" fill="black" width="18"><path d="M9 12l2 2 4-4"/><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/></svg></div><span class="logo-text">Task<span>Buddies</span></span></div>
+          <p>Pakistan's community task platform. Any task, any skill, paid in PKR.</p>
+        </div>
+        <div class="footer-col"><h4>Platform</h4><a onclick="goto('jobs')">Browse Tasks</a><a onclick="requireAuth(()=>goto('post'))">Post a Task</a><a onclick="requireAuth(()=>goto('dashboard'))">Dashboard</a></div>
+        <div class="footer-col"><h4>Account</h4><a onclick="openModal('signup')">Sign Up</a><a onclick="openModal('login')">Sign In</a><a>Settings</a></div>
+        <div class="footer-col"><h4>Company</h4><a>About</a><a>Privacy Policy</a><a>Terms</a><a>Support</a></div>
+      </div>
+      <div class="footer-bottom"><span>© 2025 TaskBuddies v7. Pakistan.</span><span>Made with 💚</span></div>
+    </div>
+  </footer>
+</div>
+
+<!-- ====== JOBS ====== -->
+<div class="page" id="page-jobs">
+  <div class="page-hd">
+    <div class="page-hd-inner">
+      <h1>Browse Tasks</h1>
+      <p id="jobsCountLabel">Find the perfect task that matches your skills</p>
+      <div class="search-row">
+        <div class="sw" style="flex:2"><span class="si">🔍</span><input type="text" id="jobSearch" placeholder="Search tasks..." oninput="renderJobs()"></div>
+        <select class="sel" id="catFilter" onchange="renderJobs()"><option value="">All Categories</option></select>
+        <select class="sel" id="typeFilter" onchange="renderJobs()"><option value="">All Types</option><option>Fixed Price</option><option>Hourly</option><option>Negotiable</option></select>
+        <button class="btn btn-primary btn-sm" onclick="requireAuth(()=>goto('post'))">+ Post Task</button>
+      </div>
+    </div>
+  </div>
+  <div class="jobs-layout">
+    <div class="sidebar">
+      <div class="sb-title">🎛 Filters</div>
+      <div class="fg">
+        <div class="fg-t">Budget Range (PKR)</div>
+        <div class="fi"><input type="checkbox" id="f1" checked onchange="renderJobs()"><label for="f1">Under 2,000</label></div>
+        <div class="fi"><input type="checkbox" id="f2" checked onchange="renderJobs()"><label for="f2">2,000 – 10,000</label></div>
+        <div class="fi"><input type="checkbox" id="f3" checked onchange="renderJobs()"><label for="f3">10,000 – 30,000</label></div>
+        <div class="fi"><input type="checkbox" id="f4" checked onchange="renderJobs()"><label for="f4">30,000+</label></div>
+      </div>
+      <div class="divider"></div>
+      <div class="fg">
+        <div class="fg-t">Status</div>
+        <div class="fi"><input type="checkbox" id="fs1" checked onchange="renderJobs()"><label for="fs1">Open</label></div>
+      </div>
+      <div class="divider"></div>
+      <div class="fg">
+        <div class="fg-t">Sort</div>
+        <select class="sel" id="sortBy" style="width:100%;margin-top:4px" onchange="renderJobs()">
+          <option value="new">Newest First</option>
+          <option value="high">Highest Pay</option>
+          <option value="low">Lowest Pay</option>
+          <option value="apps">Most Applied</option>
+        </select>
+      </div>
+    </div>
+    <div id="jobFeed" class="jobs-feed"></div>
+  </div>
+</div>
+
+<!-- ====== POST ====== -->
+<div class="page" id="page-post">
+  <div class="post-wrap">
+    <div class="post-hd">
+      <h1>Post a Task</h1>
+      <p style="font-size:0.88rem;color:var(--text2)">Describe your task — any type of work welcome. Budget in PKR.</p>
+    </div>
+    <div class="card">
+      <div class="step-nav">
+        <button class="sp-btn active" id="spb1">① Details</button>
+        <button class="sp-btn" id="spb2">② Budget & Timeline</button>
+        <button class="sp-btn" id="spb3">③ Preview & Post</button>
+      </div>
+      <div id="sp1">
+        <div class="form-group"><label>Task Title *</label><input type="text" id="pt-title" placeholder="e.g. Need a plumber for kitchen sink repair"></div>
+        <div class="form-2col">
+          <div class="form-group"><label>Category *</label><select id="pt-cat"><option value="">Select...</option></select></div>
+          <div class="form-group"><label>Location</label><input type="text" id="pt-loc" placeholder="City, e.g. Lahore / Remote"></div>
+        </div>
+        <div class="form-group"><label>Description *</label><textarea id="pt-desc" rows="5" placeholder="Describe the task in detail. What needs done? When? Any special requirements?"></textarea></div>
+        <div class="form-group"><label>Skills / Tools Needed</label><input type="text" id="pt-skills" placeholder="e.g. Plumbing, Driving License, Photoshop"><div class="form-hint">Comma-separated</div></div>
+        <div style="text-align:right"><button class="btn btn-primary" onclick="spNext(1)">Continue →</button></div>
+      </div>
+      <div id="sp2" class="hidden">
+        <div class="form-group"><label>Payment Type</label>
+          <div class="type-grid">
+            <div class="type-opt sel" id="tt-fixed" onclick="selType('fixed')"><span class="type-icon">💰</span><div class="type-title">Fixed Price</div><div class="type-sub">One total</div></div>
+            <div class="type-opt" id="tt-hourly" onclick="selType('hourly')"><span class="type-icon">⏱️</span><div class="type-title">Hourly Rate</div><div class="type-sub">Per hour</div></div>
+            <div class="type-opt" id="tt-neg" onclick="selType('negotiable')"><span class="type-icon">🤝</span><div class="type-title">Negotiable</div><div class="type-sub">Open to offers</div></div>
+          </div>
+        </div>
+        <div class="form-2col">
+          <div class="form-group"><label>Budget (PKR) *</label><input type="number" id="pt-budget" placeholder="e.g. 5000" min="100"><div class="form-hint">Amount in Pakistani Rupees</div></div>
+          <div class="form-group"><label>Experience Level</label><select id="pt-level"><option>Any Level</option><option>Beginner</option><option>Intermediate</option><option>Expert</option></select></div>
+        </div>
+        <div class="form-2col">
+          <div class="form-group"><label>Start Date</label><input type="date" id="pt-start"></div>
+          <div class="form-group"><label>Deadline</label><input type="date" id="pt-dl"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between"><button class="btn btn-subtle" onclick="spBack()">← Back</button><button class="btn btn-primary" onclick="spNext(2)">Preview →</button></div>
+      </div>
+      <div id="sp3" class="hidden">
+        <div class="preview-box" id="previewBox"></div>
+        <div class="preview-note">⚠️ Your task goes live immediately after posting. Workers will be able to apply right away.</div>
+        <div style="display:flex;justify-content:space-between"><button class="btn btn-subtle" onclick="spBack()">← Edit</button><button class="btn btn-primary" onclick="submitTask()">🚀 Post Task Live</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== DASHBOARD ====== -->
+<div class="page" id="page-dashboard">
+  <div class="dash-wrap">
+    <div class="dash-side" id="dashSide">
+      <div class="ds-profile">
+        <div class="ds-av" id="dsAv">TB</div>
+        <div class="ds-name" id="dsName">User</div>
+        <div class="ds-role" id="dsRole">Member</div>
+      </div>
+      <div class="ds-section">Main</div>
+      <div class="ds-item active" data-s="overview" onclick="dsNav(this,'overview')"><span class="ds-icon">🏠</span>Overview</div>
+      <div class="ds-item" data-s="my-tasks" onclick="dsNav(this,'my-tasks')"><span class="ds-icon">📋</span>My Tasks</div>
+      <div class="ds-item" data-s="apps" onclick="dsNav(this,'apps')"><span class="ds-icon">📨</span>My Applications</div>
+      <div class="ds-section">Finance</div>
+      <div class="ds-item" data-s="earnings" onclick="dsNav(this,'earnings')"><span class="ds-icon">💰</span>Earnings</div>
+      <div class="ds-item" data-s="payment" onclick="dsNav(this,'payment')"><span class="ds-icon">💳</span>Payment Method</div>
+      <div class="ds-section">Account</div>
+      <div class="ds-item" data-s="profile" onclick="dsNav(this,'profile')"><span class="ds-icon">👤</span>Profile</div>
+      <div class="ds-item" data-s="settings" onclick="dsNav(this,'settings')"><span class="ds-icon">⚙️</span>Settings</div>
+      <div class="divider" style="margin:10px 0"></div>
+      <div class="ds-item" onclick="goto('admin')" style="color:var(--blue)"><span class="ds-icon">🔐</span>Admin Panel</div>
+    </div>
+    <div class="dash-main" id="dashMain"></div>
+  </div>
+</div>
+
+<!-- ====== ADMIN ====== -->
+<div class="page" id="page-admin">
+  <div class="admin-wrap">
+    <div class="admin-side">
+      <div class="ds-profile">
+        <div class="ds-av" style="background:var(--blue)">AD</div>
+        <div class="ds-name">Admin Panel</div>
+        <div class="ds-role" style="color:rgba(255,255,255,0.3)">Full Access</div>
+      </div>
+      <div class="ds-section"></div>
+      <div class="ds-item active" data-a="aoverview" onclick="adNav(this,'aoverview')"><span class="ds-icon">📊</span>Dashboard</div>
+      <div class="ds-section">Manage</div>
+      <div class="ds-item" data-a="atasks" onclick="adNav(this,'atasks')"><span class="ds-icon">📋</span>All Tasks</div>
+      <div class="ds-item" data-a="ausers" onclick="adNav(this,'ausers')"><span class="ds-icon">👥</span>Users</div>
+      <div class="ds-item" data-a="apayments" onclick="adNav(this,'apayments')"><span class="ds-icon">💰</span>Payments</div>
+      <div class="ds-item" data-a="areports" onclick="adNav(this,'areports')"><span class="ds-icon">📈</span>Reports</div>
+      <div class="divider" style="margin:10px 0;border-color:rgba(255,255,255,0.06)"></div>
+      <div class="ds-item" onclick="goto('home')"><span class="ds-icon">←</span>Back to Site</div>
+    </div>
+    <div class="admin-main" id="adminMain"></div>
+  </div>
+</div>
+
+<!-- ====== MODALS ====== -->
+<!-- Login -->
+<div class="overlay hidden" id="mod-login">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('login')">✕</button>
+    <h2>Welcome back</h2>
+    <p class="modal-sub">Sign in to TaskBuddies</p>
+    <div class="form-group"><label>Email *</label><input type="email" id="lin-email" placeholder="you@email.com"></div>
+    <div class="form-group"><label>Password *</label><input type="password" id="lin-pass" placeholder="Your password"></div>
+    <div id="login-err" class="alert alert-amber hidden"></div>
+    <button class="btn btn-primary btn-full" onclick="doLogin()">Sign In</button>
+    <div style="display:flex;align-items:center;gap:10px;margin:14px 0"><div style="flex:1;height:1px;background:var(--border)"></div><span style="font-size:0.75rem;color:var(--text4);white-space:nowrap">or continue with</span><div style="flex:1;height:1px;background:var(--border)"></div></div>
+    <div id="google-btn-login" style="display:flex;justify-content:center"></div>
+    <div style="text-align:center;margin-top:14px;font-size:0.83rem;color:var(--text4)">No account? <a style="color:var(--em);cursor:pointer;font-weight:700" onclick="closeModal('login');openModal('signup')">Sign Up</a></div>
+  </div>
+</div>
+
+<!-- Signup -->
+<div class="overlay hidden" id="mod-signup">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('signup')">✕</button>
+    <h2>Create Account</h2>
+    <p class="modal-sub">Join TaskBuddies — free forever</p>
+    <div class="role-grid">
+      <div class="role-opt selected" id="ro-poster" onclick="selRole('poster')"><span class="role-icon">🏠</span><div class="role-title">Task Poster</div><div class="role-sub">I need tasks done</div></div>
+      <div class="role-opt" id="ro-worker" onclick="selRole('worker')"><span class="role-icon">💪</span><div class="role-title">Task Worker</div><div class="role-sub">I complete tasks for pay</div></div>
+    </div>
+    <div class="form-2col">
+      <div class="form-group"><label>First Name *</label><input type="text" id="su-fn" placeholder="Ahmad"></div>
+      <div class="form-group"><label>Last Name *</label><input type="text" id="su-ln" placeholder="Khan"></div>
+    </div>
+    <div class="form-group"><label>Email *</label><input type="email" id="su-em" placeholder="you@email.com"></div>
+    <div class="form-group"><label>Phone (JazzCash / WhatsApp)</label><input type="tel" id="su-ph" placeholder="03XX-XXXXXXX"></div>
+    <div class="form-group"><label>City</label><input type="text" id="su-city" placeholder="Lahore, Karachi, Islamabad..."></div>
+    <div class="form-group"><label>Password *</label><input type="password" id="su-pw" placeholder="Min. 8 characters"></div>
+    <div id="signup-err" class="alert alert-amber hidden"></div>
+    <button class="btn btn-primary btn-full" onclick="doSignup()">Create Account →</button>
+    <div style="display:flex;align-items:center;gap:10px;margin:14px 0"><div style="flex:1;height:1px;background:var(--border)"></div><span style="font-size:0.75rem;color:var(--text4);white-space:nowrap">or sign up with</span><div style="flex:1;height:1px;background:var(--border)"></div></div>
+    <div id="google-btn-signup" style="display:flex;justify-content:center"></div>
+    <div style="text-align:center;margin-top:12px;font-size:0.83rem;color:var(--text4)">Have an account? <a style="color:var(--em);cursor:pointer;font-weight:700" onclick="closeModal('signup');openModal('login')">Sign In</a></div>
+    <div style="font-size:0.7rem;color:var(--text4);text-align:center;margin-top:8px">By signing up you agree to our Terms & Privacy Policy</div>
+  </div>
+</div>
+
+<!-- Apply -->
+<!-- Applicants Modal (task owner view) -->
+<div class="overlay hidden" id="mod-applicants">
+  <div class="modal" style="max-width:620px;width:100%">
+    <button class="modal-close" onclick="closeModal('applicants')">✕</button>
+    <h2>Applicants</h2>
+    <p class="modal-sub" id="applicantsTaskLabel">Loading...</p>
+    <div id="applicantsList" style="max-height:480px;overflow-y:auto;margin-top:16px">
+      <div style="text-align:center;padding:30px 0;color:var(--text4)">Loading...</div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="mod-apply">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('apply')">✕</button>
+    <h2>Apply for Task</h2>
+    <p class="modal-sub" id="applyTaskLabel">Task name</p>
+    <div class="form-group"><label>Why you? *</label><textarea id="ap-msg" rows="5" placeholder="Tell the poster why you're the right person. Be specific about experience and approach."></textarea></div>
+    <div class="form-2col">
+      <div class="form-group"><label>Your Offer (PKR) *</label><input type="number" id="ap-rate" placeholder="e.g. 4500"><div class="form-hint">Amount in PKR</div></div>
+      <div class="form-group"><label>Est. Completion</label><input type="text" id="ap-time" placeholder="e.g. 2 days"></div>
+    </div>
+    <div class="form-group"><label>Relevant Experience</label><input type="text" id="ap-exp" placeholder="e.g. 5 years plumbing"></div>
+    <button class="btn btn-primary btn-full" onclick="submitApply()">Submit Application →</button>
+  </div>
+</div>
+
+<script>
+// ======= CONFIG =======
+// Change this to your deployed backend URL when you go live on Render
+const API_URL = 'http://localhost:5000/api';
+
+// ======= STATE =======
+const DB = {
+  tasks: [],
+  apps: [],
+  session: JSON.parse(localStorage.getItem('tb7_session')||'null'),
+  token: localStorage.getItem('tb7_token')||null
+};
+
+function save(key){ if(key==='session'){ localStorage.setItem('tb7_session', JSON.stringify(DB[key])); } }
+
+// ======= API HELPER =======
+async function api(path, method='GET', body=null){
+  const opts = {
+    method,
+    headers: { 'Content-Type': 'application/json' }
+  };
+  if(DB.token) opts.headers['Authorization'] = 'Bearer ' + DB.token;
+  if(body) opts.body = JSON.stringify(body);
+  const res = await fetch(API_URL + path, opts);
+  const data = await res.json();
+  if(!res.ok) throw new Error(data.message || 'Request failed');
+  return data;
+}
+
+const CATS = [
+  {name:'Home & Garden',icon:'🏡',eg:'Moving, Cleaning, Repairs, Gardening'},
+  {name:'Tech & Digital',icon:'💻',eg:'Web, Apps, IT Support, Design'},
+  {name:'Skilled Trades',icon:'🔧',eg:'Plumbing, Electrical, Carpentry'},
+  {name:'Writing & Content',icon:'✍️',eg:'Articles, Copywriting, Urdu Translation'},
+  {name:'Transport & Delivery',icon:'🚚',eg:'Courier, Driving, Moving'},
+  {name:'Health & Fitness',icon:'💪',eg:'Personal Training, Coaching'},
+  {name:'Education & Tutoring',icon:'📚',eg:'Matric, O/A Levels, Coding'},
+  {name:'Events & Hospitality',icon:'🎉',eg:'Catering, Decorating, Setup'},
+  {name:'Pet Care',icon:'🐾',eg:'Dog Walking, Grooming, Sitting'},
+  {name:'Admin & Support',icon:'📋',eg:'Data Entry, Virtual Assist'},
+  {name:'Creative & Arts',icon:'🎨',eg:'Photography, Video, Graphic Design'},
+  {name:'Business & Finance',icon:'📊',eg:'Bookkeeping, Marketing, Social Media'},
+];
+
+const CAT_ICONS = {Home:'🏡',Tech:'💻',Skilled:'🔧',Writing:'✍️',Transport:'🚚',Health:'💪',Education:'📚',Events:'🎉',Pet:'🐾',Admin:'📋',Creative:'🎨',Business:'📊'};
+function catIcon(cat){ const k=Object.keys(CAT_ICONS).find(k=>cat?.startsWith(k)); return k?CAT_ICONS[k]:'📌'; }
+function pkr(n){ return 'PKR '+Number(n).toLocaleString('en-PK'); }
+function fmtDate(d){ return d?new Date(d).toLocaleDateString('en-PK',{day:'numeric',month:'short'}):'Open'; }
+
+// ======= THEME =======
+let isDark = localStorage.getItem('tb7_theme')!=='light';
+function applyTheme(){ document.documentElement.setAttribute('data-theme',isDark?'dark':'light'); document.getElementById('themeBtn').textContent=isDark?'🌙':'☀️'; localStorage.setItem('tb7_theme',isDark?'dark':'light'); }
+function toggleTheme(){ isDark=!isDark; applyTheme(); }
+applyTheme();
+
+// ======= NAV =======
+function goto(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById('page-'+page);
+  if(el) el.classList.add('active');
+  window.scrollTo(0,0);
+  if(page==='jobs'){ populateCatFilter(); renderJobs(); }
+  if(page==='dashboard'){ renderDash('overview'); }
+  if(page==='admin'){ renderAdmin('aoverview'); }
+  if(page==='post'){ populatePostCats(); resetPost(); }
+  updateHomeStats();
+}
+function scrollHow(){ goto('home'); setTimeout(()=>document.getElementById('how-section')?.scrollIntoView({behavior:'smooth'}),200); }
+function requireAuth(cb){ if(DB.session){ cb(); } else { openModal('login'); pendingCb=cb; } }
+let pendingCb=null;
+
+// ======= INIT UI =======
+function buildCatGrid(){
+  const g=document.getElementById('catGrid'); if(!g) return;
+  g.innerHTML=CATS.map(c=>`<div class="cat-card" onclick="goto('jobs')"><span class="cat-icon">${c.icon}</span><div class="cat-name">${c.name}</div><div class="cat-count">${DB.tasks.filter(t=>t.cat===c.name&&t.status==='open').length} tasks</div></div>`).join('');
+}
+function populateCatFilter(){
+  const s=document.getElementById('catFilter'); if(!s) return;
+  s.innerHTML='<option value="">All Categories</option>'+CATS.map(c=>`<option>${c.name}</option>`).join('');
+}
+function populatePostCats(){
+  const s=document.getElementById('pt-cat'); if(!s) return;
+  s.innerHTML='<option value="">Select...</option>'+CATS.map(c=>`<option>${c.name}</option>`).join('');
+}
+
+// ======= HOME STATS =======
+function updateHomeStats(){
+  // Use cached tasks for immediate render, also fetch fresh from API
+  const open=DB.tasks.filter(t=>t.status==='open').length;
+  const el=document.getElementById('heroOpen'); if(el) el.textContent=open||'—';
+  const el2=document.getElementById('heroUsers'); if(el2) el2.textContent='—';
+  buildLiveBoard(); buildCatGrid();
+  // Fetch live stats from API
+  api('/tasks').then(tasks=>{
+    DB.tasks=tasks.map(t=>({
+      id:t._id, _id:t._id,
+      title:t.title, cat:t.category, budget:t.budget,
+      byId:t.postedBy?._id, byName:t.postedBy?.name||'Unknown',
+      desc:t.description, loc:t.location||'Pakistan',
+      skills:t.skills?t.skills.split(',').map(s=>s.trim()).filter(Boolean):[],
+      type:t.paymentType||'Fixed Price', level:t.level||'Any Level',
+      deadline:t.deadline, status:t.status, apps:0, createdAt:new Date(t.createdAt).getTime()
+    }));
+    const liveOpen=DB.tasks.filter(t=>t.status==='open').length;
+    const el=document.getElementById('heroOpen'); if(el) el.textContent=liveOpen;
+    buildLiveBoard(); buildCatGrid();
+    if(document.getElementById('page-jobs')?.classList.contains('active')) renderJobs();
+  }).catch(()=>{});
+}
+function buildLiveBoard(){
+  const el=document.getElementById('liveTasksFeed'); if(!el) return;
+  const tasks=DB.tasks.filter(t=>t.status==='open').slice(0,4);
+  if(tasks.length===0){ el.innerHTML=`<div style="text-align:center;padding:20px 0;font-size:0.82rem;color:var(--text4)">No tasks posted yet. <a style="color:var(--em);cursor:pointer" onclick="requireAuth(()=>goto('post'))">Post the first →</a></div>`; return; }
+  el.innerHTML=tasks.map(t=>`<div class="task-pill" onclick="goto('jobs')"><div class="task-ico">${catIcon(t.cat)}</div><div class="task-pi"><div class="task-ptitle">${t.title}</div><div class="task-pmeta">${t.cat} · ${t.loc||'Pakistan'}</div></div><div class="task-ppay">${pkr(t.budget)}</div></div>`).join('');
+}
+
+// ======= JOBS =======
+function renderJobs(){
+  // Always fetch fresh from MongoDB
+  const feed=document.getElementById('jobFeed');
+  if(feed) feed.innerHTML=`<div style="text-align:center;padding:40px 0;color:var(--text4)">Loading tasks...</div>`;
+  api('/tasks').then(tasks=>{
+    DB.tasks=tasks.map(t=>({
+      id:t._id, _id:t._id,
+      title:t.title, cat:t.category, budget:t.budget,
+      byId:t.postedBy?._id, byName:t.postedBy?.name||'Unknown',
+      desc:t.description, loc:t.location||'Pakistan',
+      skills:t.skills?t.skills.split(',').map(s=>s.trim()).filter(Boolean):[],
+      type:t.paymentType||'Fixed Price', level:t.level||'Any Level',
+      deadline:t.deadline, status:t.status, apps:0, createdAt:new Date(t.createdAt).getTime()
+    }));
+    _renderJobsFromCache();
+    buildLiveBoard(); buildCatGrid();
+    const el=document.getElementById('heroOpen'); if(el) el.textContent=DB.tasks.filter(t=>t.status==='open').length;
+  }).catch(()=>{
+    if(feed) feed.innerHTML=`<div class="empty-state"><span class="es-icon">⚠️</span><h3>Could not load tasks</h3><p>Make sure the server is running at ${API_URL}</p></div>`;
+  });
+}
+function _renderJobsFromCache(){
+  const q=(document.getElementById('jobSearch')?.value||'').toLowerCase();
+  const cat=document.getElementById('catFilter')?.value||'';
+  const type=document.getElementById('typeFilter')?.value||'';
+  const sort=document.getElementById('sortBy')?.value||'new';
+  const f1=document.getElementById('f1')?.checked;
+  const f2=document.getElementById('f2')?.checked;
+  const f3=document.getElementById('f3')?.checked;
+  const f4=document.getElementById('f4')?.checked;
+  const fs1=document.getElementById('fs1')?.checked;
+  // Budget filter: if ALL unchecked treat as show all
+  const anyBudget = !f1 && !f2 && !f3 && !f4;
+  let tasks=DB.tasks.filter(t=>{
+    if(q && !t.title.toLowerCase().includes(q) && !t.desc?.toLowerCase().includes(q)) return false;
+    if(cat && t.cat!==cat) return false;
+    if(type && t.type!==type) return false;
+    if(fs1 && t.status!=='open') return false;
+    if(!anyBudget){
+      const b=Number(t.budget);
+      let bOk=false;
+      if(f1&&b<2000) bOk=true;
+      if(f2&&b>=2000&&b<=10000) bOk=true;
+      if(f3&&b>10000&&b<=30000) bOk=true;
+      if(f4&&b>30000) bOk=true;
+      if(!bOk) return false;
+    }
+    return true;
+  });
+  if(sort==='high') tasks.sort((a,b)=>b.budget-a.budget);
+  else if(sort==='low') tasks.sort((a,b)=>a.budget-b.budget);
+  else if(sort==='apps') tasks.sort((a,b)=>b.apps-a.apps);
+  else tasks.sort((a,b)=>b.createdAt-a.createdAt);
+  const feed=document.getElementById('jobFeed');
+  const cnt=document.getElementById('jobsCountLabel');
+  if(cnt) cnt.textContent=tasks.length+' task'+(tasks.length!==1?'s':'')+' available';
+  if(!feed) return;
+  if(tasks.length===0){
+    feed.innerHTML=`<div class="empty-state"><span class="es-icon">🔍</span><h3 style="font-family:'Fraunces',serif;font-weight:700;color:var(--text2)">No tasks found</h3><p>Adjust filters or <a style="color:var(--em);cursor:pointer" onclick="requireAuth(()=>goto('post'))">post a task</a>.</p></div>`;
+    return;
+  }
+  feed.innerHTML=tasks.map(t=>`<div class="job-card" onclick="openApply('${t.id}')">
+    <div class="jc-top">
+      <div class="jc-left"><div class="j-ico">${catIcon(t.cat)}</div><div><div class="j-h3">${t.title}</div><div class="j-by">By ${t.byName} · </div></div></div>
+      <div style="text-align:right;flex-shrink:0"><span class="badge badge-em">${t.cat}</span><div style="font-size:0.72rem;color:var(--text4);margin-top:4px">📍 ${t.loc||'Pakistan'}</div></div>
+    </div>
+    <p class="j-desc">${t.desc}</p>
+    <div class="j-tags">${(t.skills||[]).map(s=>`<span class="j-tag">${s}</span>`).join('')}<span class="j-tag">🎯 ${t.level}</span></div>
+    <div class="j-footer">
+      <div class="j-pay">${pkr(t.budget)}${t.type==='Hourly'?'/hr':''}<span class="pkr-tag">PKR</span></div>
+      <div class="j-meta-row"><span class="j-meta">👥 ${t.apps||0} applied</span><span class="j-meta">📅 ${fmtDate(t.deadline)}</span><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openApply('${t.id}')">Apply</button></div>
+    </div>
+  </div>`).join('');
+}
+
+// ======= APPLY =======
+let applyTarget=null;
+function openApply(id){
+  if(!DB.session){ openModal('login'); return; }
+  applyTarget=DB.tasks.find(t=>t.id===id);
+  if(!applyTarget) return;
+  if(applyTarget.byId===DB.session.id){ toast("You can't apply to your own task",'error'); return; }
+  document.getElementById('applyTaskLabel').textContent=applyTarget.title+' — PKR '+Number(applyTarget.budget).toLocaleString();
+  openModal('apply');
+}
+async function submitApply(){
+  if(!DB.session){ toast('Please sign in first','error'); return; }
+  const msg=document.getElementById('ap-msg').value.trim();
+  const rate=document.getElementById('ap-rate').value;
+  if(!msg||!rate){ toast('Fill all required fields','error'); return; }
+  const btn=document.querySelector('#mod-apply .btn-primary');
+  if(btn){ btn.textContent='Submitting...'; btn.disabled=true; }
+  try {
+    await api('/tasks/'+applyTarget.id+'/apply','POST',{
+      message: msg,
+      rate: Number(rate),
+      estimatedTime: document.getElementById('ap-time')?.value||'',
+      experience: document.getElementById('ap-exp')?.value||''
+    });
+    closeModal('apply');
+    ['ap-msg','ap-rate','ap-time','ap-exp'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+    toast('Application submitted! 🚀','success');
+  } catch(err){
+    toast(err.message||'Failed to submit application','error');
+  } finally {
+    if(btn){ btn.textContent='Submit Application →'; btn.disabled=false; }
+  }
+}
+
+// ======= POST TASK =======
+let pStep=1, pType='fixed';
+function resetPost(){ pStep=1; ['sp1','sp2','sp3'].forEach((id,i)=>{ const el=document.getElementById(id); if(el) el.classList.toggle('hidden',i!==0); }); ['spb1','spb2','spb3'].forEach((id,i)=>{ const b=document.getElementById(id); if(b){ b.classList.remove('active','done'); if(i===0) b.classList.add('active'); } }); }
+function selType(t){ pType=t; ['fixed','hourly','neg'].forEach(x=>{ const el=document.getElementById('tt-'+x); if(el) el.classList.toggle('sel',x===t); }); }
+function spNext(s){
+  if(s===1){
+    if(!document.getElementById('pt-title').value.trim()||!document.getElementById('pt-cat').value||!document.getElementById('pt-desc').value.trim()){ toast('Fill required fields','error'); return; }
+    document.getElementById('sp1').classList.add('hidden'); document.getElementById('sp2').classList.remove('hidden');
+    document.getElementById('spb1').classList.remove('active'); document.getElementById('spb1').classList.add('done'); document.getElementById('spb2').classList.add('active'); pStep=2;
+  } else if(s===2){
+    if(!document.getElementById('pt-budget').value){ toast('Enter a budget in PKR','error'); return; }
+    const typeMap={fixed:'Fixed Price',hourly:'Hourly',negotiable:'Negotiable'};
+    const icon=catIcon(document.getElementById('pt-cat').value);
+    document.getElementById('previewBox').innerHTML=`
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><div class="j-ico">${icon}</div><div><div style="font-family:'Fraunces',serif;font-size:1rem;font-weight:700;color:var(--text)">${document.getElementById('pt-title').value}</div><div style="font-size:0.78rem;color:var(--em);margin-top:2px">${document.getElementById('pt-cat').value}</div></div></div>
+      <p style="font-size:0.84rem;color:var(--text2);line-height:1.6;margin-bottom:12px">${document.getElementById('pt-desc').value}</p>
+      <div style="display:flex;gap:18px"><div><div style="font-size:0.7rem;color:var(--text4)">Budget</div><div style="font-weight:900;font-family:'Fraunces',serif;color:var(--em);font-size:1.05rem">${pkr(document.getElementById('pt-budget').value)}</div></div><div><div style="font-size:0.7rem;color:var(--text4)">Type</div><div style="font-weight:600;color:var(--text);font-size:0.85rem">${typeMap[pType]||'Fixed'}</div></div><div><div style="font-size:0.7rem;color:var(--text4)">Level</div><div style="font-weight:600;color:var(--text);font-size:0.85rem">${document.getElementById('pt-level').value}</div></div><div><div style="font-size:0.7rem;color:var(--text4)">Location</div><div style="font-weight:600;color:var(--text);font-size:0.85rem">${document.getElementById('pt-loc').value||'Pakistan'}</div></div></div>`;
+    document.getElementById('sp2').classList.add('hidden'); document.getElementById('sp3').classList.remove('hidden');
+    document.getElementById('spb2').classList.remove('active'); document.getElementById('spb2').classList.add('done'); document.getElementById('spb3').classList.add('active'); pStep=3;
+  }
+}
+function spBack(){
+  if(pStep===2){ document.getElementById('sp2').classList.add('hidden'); document.getElementById('sp1').classList.remove('hidden'); document.getElementById('spb2').classList.remove('active','done'); document.getElementById('spb1').classList.remove('done'); document.getElementById('spb1').classList.add('active'); pStep=1; }
+  else if(pStep===3){ document.getElementById('sp3').classList.add('hidden'); document.getElementById('sp2').classList.remove('hidden'); document.getElementById('spb3').classList.remove('active'); document.getElementById('spb2').classList.remove('done'); document.getElementById('spb2').classList.add('active'); pStep=2; }
+}
+async function submitTask(){
+  if(!DB.session){ toast('Please sign in first','error'); return; }
+  const typeMap={fixed:'Fixed Price',hourly:'Hourly',negotiable:'Negotiable'};
+  const btn=document.querySelector('#page-post .btn-primary[onclick="submitTask()"]');
+  if(btn){ btn.textContent='Posting...'; btn.disabled=true; }
+  try {
+    const body={
+      title:document.getElementById('pt-title').value.trim(),
+      category:document.getElementById('pt-cat').value,
+      paymentType:typeMap[pType]||'Fixed Price',
+      budget:Number(document.getElementById('pt-budget').value)||0,
+      level:document.getElementById('pt-level').value,
+      skills:document.getElementById('pt-skills').value,
+      description:document.getElementById('pt-desc').value.trim(),
+      deadline:document.getElementById('pt-dl').value||'',
+      startDate:document.getElementById('pt-start')?.value||'',
+      location:document.getElementById('pt-loc').value.trim()||'Pakistan',
+      phone:DB.session.phone||''
+    };
+    const data = await api('/tasks/create','POST',body);
+    toast('Task posted live! 🎉','success');
+    // Refresh tasks from MongoDB then navigate
+    setTimeout(()=>goto('jobs'),800);
+  } catch(err){
+    toast(err.message||'Failed to post task. Check you are signed in.','error');
+  } finally {
+    if(btn){ btn.textContent='🚀 Post Task Live'; btn.disabled=false; }
+  }
+}
+
+// ======= AUTH =======
+let selRoleVal='poster';
+function selRole(r){ selRoleVal=r; ['poster','worker'].forEach(x=>{ const el=document.getElementById('ro-'+x); if(el) el.classList.toggle('selected',x===r); }); }
+
+async function doLogin(){
+  const email=document.getElementById('lin-email').value.trim().toLowerCase();
+  const pass=document.getElementById('lin-pass').value;
+  const errEl=document.getElementById('login-err');
+  const btn=document.querySelector('#mod-login .btn-primary');
+  errEl.classList.add('hidden');
+  if(!email||!pass){ errEl.textContent='Please enter email and password.'; errEl.classList.remove('hidden'); return; }
+  btn.textContent='Signing in...'; btn.disabled=true;
+  try {
+    const data = await api('/auth/login','POST',{email,password:pass});
+    DB.session = data.user; DB.token = data.token;
+    save('session'); localStorage.setItem('tb7_token', data.token);
+    closeModal('login'); updateNav();
+    toast('Welcome back, '+data.user.name.split(' ')[0]+'! 👋','success');
+    if(pendingCb){ pendingCb(); pendingCb=null; } else { goto('dashboard'); }
+  } catch(err){
+    errEl.textContent = err.message || 'Sign in failed. Try again.';
+    errEl.classList.remove('hidden');
+  } finally {
+    btn.textContent='Sign In'; btn.disabled=false;
+  }
+}
+
+async function doSignup(){
+  const fn=document.getElementById('su-fn').value.trim();
+  const ln=document.getElementById('su-ln').value.trim();
+  const email=document.getElementById('su-em').value.trim().toLowerCase();
+  const phone=document.getElementById('su-ph').value.trim();
+  const city=document.getElementById('su-city').value.trim();
+  const pass=document.getElementById('su-pw').value;
+  const errEl=document.getElementById('signup-err');
+  const btn=document.querySelector('#mod-signup .btn-primary');
+  errEl.classList.add('hidden');
+  if(!fn||!ln||!email||!pass){ errEl.textContent='Please fill all required fields.'; errEl.classList.remove('hidden'); return; }
+  if(pass.length<8){ errEl.textContent='Password must be at least 8 characters.'; errEl.classList.remove('hidden'); return; }
+  btn.textContent='Creating account...'; btn.disabled=true;
+  try {
+    const data = await api('/auth/register','POST',{name:fn+' '+ln,email,phone,city,password:pass});
+    DB.session = data.user; DB.token = data.token;
+    save('session'); localStorage.setItem('tb7_token', data.token);
+    closeModal('signup'); updateNav();
+    toast('Welcome to TaskBuddies, '+fn+'! 🎉','success');
+    if(pendingCb){ pendingCb(); pendingCb=null; } else { goto('dashboard'); }
+  } catch(err){
+    errEl.textContent = err.message || 'Sign up failed. Try again.';
+    errEl.classList.remove('hidden');
+  } finally {
+    btn.textContent='Create Account →'; btn.disabled=false;
+  }
+}
+
+function doLogout(){
+  DB.session=null; DB.token=null;
+  localStorage.removeItem('tb7_session');
+  localStorage.removeItem('tb7_token');
+  updateNav(); goto('home'); toast('Signed out successfully');
+}
+
+// ======= GOOGLE AUTH =======
+function handleGoogleSignIn(response){
+  const errLogin=document.getElementById('login-err');
+  const errSignup=document.getElementById('signup-err');
+  fetch(API_URL+'/auth/google',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({credential:response.credential})
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.token){
+      DB.session=data.user; DB.token=data.token;
+      save('session'); localStorage.setItem('tb7_token',data.token);
+      closeModal('login'); closeModal('signup'); updateNav();
+      toast('Signed in as '+data.user.name.split(' ')[0]+'! 🎉','success');
+      if(pendingCb){ pendingCb(); pendingCb=null; } else { goto('dashboard'); }
+    } else {
+      const msg = data.message || 'Google sign-in failed';
+      if(errLogin) { errLogin.textContent=msg; errLogin.classList.remove('hidden'); }
+      if(errSignup) { errSignup.textContent=msg; errSignup.classList.remove('hidden'); }
+    }
+  })
+  .catch(()=>{
+    if(errLogin){ errLogin.textContent='Google sign-in failed. Try again.'; errLogin.classList.remove('hidden'); }
+  });
+}
+
+function updateNav(){
+  const u=DB.session;
+  document.getElementById('guestNav').classList.toggle('hidden',!!u);
+  document.getElementById('userNav').classList.toggle('hidden',!u);
+  document.getElementById('dashNavBtn').classList.toggle('hidden',!u);
+  if(u){
+    const av=document.getElementById('navAv'); if(av) av.textContent=u.initials||u.name[0]||'U';
+    const nm=document.getElementById('navName'); if(nm) nm.textContent=u.name.split(' ')[0];
+    const dsAv=document.getElementById('dsAv'); if(dsAv) dsAv.textContent=u.initials||u.name[0];
+    const dsNm=document.getElementById('dsName'); if(dsNm) dsNm.textContent=u.name;
+    const dsRl=document.getElementById('dsRole'); if(dsRl) dsRl.textContent=u.role==='worker'?'Task Worker':'Task Poster';
+  }
+}
+
+// ======= DASHBOARD =======
+function dsNav(el,s){ document.querySelectorAll('#dashSide .ds-item').forEach(x=>x.classList.remove('active')); el.classList.add('active'); renderDash(s); }
+async function renderDash(s){
+  const u=DB.session; if(!u) return;
+  const main=document.getElementById('dashMain'); if(!main) return;
+  // Always fetch fresh from MongoDB
+  try {
+    const [myTasksRaw, myAppsRaw] = await Promise.all([
+      api('/tasks/my'),
+      api('/tasks/applications/my')
+    ]);
+    const myTasks = myTasksRaw.map(t=>({
+      id:t._id, _id:t._id, title:t.title, cat:t.category, budget:t.budget,
+      desc:t.description, loc:t.location||'Pakistan', type:t.paymentType||'Fixed Price',
+      level:t.level, deadline:t.deadline, status:t.status, createdAt:new Date(t.createdAt).getTime()
+    }));
+    const myApps = myAppsRaw.map(a=>({
+      id:a._id, _id:a._id,
+      taskTitle:a.task?.title||'Deleted task', taskId:a.task?._id,
+      taskCat:a.task?.category||'', taskBudget:a.task?.budget||0,
+      msg:a.message, rate:a.rate, time:a.estimatedTime, exp:a.experience,
+      status:a.status, createdAt:new Date(a.createdAt).getTime()
+    }));
+    DB.apps = myApps;
+    _renderDashView(s, u, myTasks, myApps, main);
+  } catch(err){
+    main.innerHTML=`<div class="empty-state"><span class="es-icon">⚠️</span><h3>Could not load dashboard</h3><p>Make sure the server is running.</p></div>`;
+  }
+}
+function _renderDashView(s, u, myTasks, myApps, main){
+  if(!main) return;
+
+  if(s==='overview'){
+    main.innerHTML=`
+      <div class="dash-hd"><h1>Good day, ${u.name.split(' ')[0]}! 👋</h1><p>Your TaskBuddies overview</p></div>
+      <div class="metrics">
+        <div class="metric"><div class="m-icon" style="background:var(--em-ultra)">📋</div><div class="m-val">${myTasks.length}</div><div class="m-lbl">Tasks Posted</div></div>
+        <div class="metric"><div class="m-icon" style="background:var(--blue-bg)">📨</div><div class="m-val">${myApps.length}</div><div class="m-lbl">Applications</div></div>
+        <div class="metric"><div class="m-icon" style="background:var(--amber-bg)">💰</div><div class="m-val">PKR 0</div><div class="m-lbl">Earned</div></div>
+        <div class="metric"><div class="m-icon" style="background:rgba(34,197,94,0.1)">⭐</div><div class="m-val">New</div><div class="m-lbl">Profile</div></div>
+      </div>
+      <div class="two-col">
+        <div class="section-card">
+          <h3>My Applications <a onclick="dsNav(document.querySelector('[data-s=apps]'),'apps')">View all →</a></h3>
+          ${myApps.length===0?`<div style="text-align:center;padding:28px 0;font-size:0.84rem;color:var(--text4)">No applications yet. <a style="color:var(--em);cursor:pointer" onclick="goto('jobs')">Browse tasks →</a></div>`:
+          myApps.slice(0,4).map(a=>`<div class="app-item" style="${a.status==='accepted'?'border-left:3px solid var(--em);padding-left:10px':''}">
+            <div class="app-av">${a.taskTitle[0]}</div>
+            <div class="app-info">
+              <div class="app-name">${a.taskTitle}${a.status==='accepted'?' 🎉':a.status==='rejected'?' 🔔':''}</div>
+              <div class="app-sub">Offered: ${pkr(a.rate)}</div>
+            </div>
+            <span class="badge badge-${a.status==='pending'?'amber':a.status==='accepted'?'green':'red'}">${a.status}</span>
+          </div>`).join('')}
+        </div>
+        <div>
+          <div class="section-card" style="margin-bottom:14px">
+            <h3>Quick Actions</h3>
+            <button class="btn btn-primary btn-full" style="margin-bottom:8px" onclick="goto('jobs')">🔍 Browse Tasks</button>
+            <button class="btn btn-outline btn-full" style="margin-bottom:8px" onclick="goto('post')">📝 Post a Task</button>
+          </div>
+          <div class="section-card">
+            <h3>Profile Completion</h3>
+            <div style="font-size:0.76rem;color:var(--em);margin-bottom:5px">${u.phone&&u.city?'80':'50'}% complete</div>
+            <div class="pb"><div class="pbf" style="width:${u.phone&&u.city?80:50}%"></div></div>
+            <div style="font-size:0.72rem;color:var(--text4);margin-top:6px">Member since ${fmtDate(u.joinedAt)}</div>
+          </div>
+        </div>
+      </div>`;
+  } else if(s==='my-tasks'){
+    main.innerHTML=`
+      <div class="dash-hd"><h1>My Posted Tasks</h1><p>Manage tasks you have posted</p></div>
+      <div style="text-align:right;margin-bottom:14px"><button class="btn btn-primary btn-sm" onclick="goto('post')">+ Post New Task</button></div>
+      ${myTasks.length===0?`<div class="section-card"><div class="empty-state" style="padding:50px 0"><span class="es-icon">📭</span><h3 style="font-family:'Fraunces',serif;font-weight:700;color:var(--text2)">No tasks posted</h3><p><a style="color:var(--em);cursor:pointer" onclick="goto('post')">Post your first task →</a></p></div></div>`:
+      myTasks.map(t=>`<div class="job-card" style="margin-bottom:10px;cursor:default">
+        <div class="jc-top"><div class="jc-left"><div class="j-ico">${catIcon(t.cat)}</div><div><div class="j-h3">${t.title}</div><div class="j-by">${t.cat} · ${t.type} · ${t.loc}</div></div></div>
+        <div style="display:flex;gap:6px;align-items:center"><span class="badge badge-${t.status==='open'?'green':t.status==='assigned'?'blue':'gray'}">${t.status==='assigned'?'🔒 assigned':t.status}</span><button class="btn btn-primary btn-sm" onclick="viewApplicants('${t.id}','${t.title.replace(/'/g,'&apos;')}')">View Applicants</button>${t.status==='open'?`<button class="btn btn-subtle btn-sm" onclick="deleteMyTask('${t.id}')">Delete</button>`:''}</div></div>
+        <div class="j-footer"><div class="j-pay">${pkr(t.budget)}<span class="pkr-tag">PKR</span></div><div class="j-meta-row"><span class="j-meta">📅 ${fmtDate(t.deadline)}</span></div></div>
+      </div>`).join('')}`;
+  } else if(s==='apps'){
+    main.innerHTML=`
+      <div class="dash-hd"><h1>My Applications</h1><p>Track tasks you've applied for</p></div>
+      ${myApps.length===0?`<div class="section-card"><div class="empty-state" style="padding:50px 0"><span class="es-icon">📨</span><h3 style="font-family:'Fraunces',serif;font-weight:700;color:var(--text2)">No applications</h3><p><a style="color:var(--em);cursor:pointer" onclick="goto('jobs')">Browse tasks →</a></p></div></div>`:
+      myApps.map(a=>{
+        const statusColor = a.status==='accepted'?'green':a.status==='rejected'?'red':'amber';
+        const acceptedBanner = a.status==='accepted' ? `
+          <div style="background:rgba(16,185,129,0.1);border:1px solid var(--em);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:0.82rem;color:var(--em);display:flex;gap:8px;align-items:center">
+            <span style="font-size:1rem">🎉</span>
+            <span><strong>Congratulations!</strong> The task owner accepted your application. Check your email for details or wait for them to contact you.</span>
+          </div>` : '';
+        const rejectedBanner = a.status==='rejected' ? `
+          <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:0.82rem;color:var(--text4);display:flex;gap:8px;align-items:center">
+            <span style="font-size:1rem">🔔</span>
+            <span>The owner didn't select your application for this task. Keep applying to other tasks!</span>
+          </div>` : '';
+        return `<div class="section-card" style="margin-bottom:10px${a.status==='accepted'?';border-color:var(--em)':a.status==='rejected'?';opacity:0.7':''}">
+          <div style="display:flex;gap:14px;align-items:flex-start">
+            <div class="app-av" style="width:46px;height:46px;font-size:0.9rem;flex-shrink:0">${a.taskTitle[0]}</div>
+            <div style="flex:1">
+              <div style="font-family:'Fraunces',serif;font-weight:700;color:var(--text);margin-bottom:3px">${a.taskTitle}</div>
+              <div style="font-size:0.76rem;color:var(--text4);margin-bottom:7px">Offered: ${pkr(a.rate)} · ${a.time||'—'} · ${timeAgo(a.createdAt)}</div>
+              <div style="font-size:0.82rem;color:var(--text2);background:var(--surface2);padding:9px;border-radius:8px;line-height:1.5">“${a.msg.substring(0,120)}${a.msg.length>120?'...':''}”</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0">
+              <span class="badge badge-${statusColor}">${a.status}</span>
+              ${a.status==='pending'?`<button class="btn btn-subtle btn-sm" style="font-size:0.72rem" onclick="withdrawApp('${a.id}')">Withdraw</button>`:''}
+            </div>
+          </div>
+          ${acceptedBanner}${rejectedBanner}
+        </div>`;
+      }).join('')}`;
+  } else if(s==='earnings'){
+    main.innerHTML=`
+      <div class="dash-hd"><h1>Earnings</h1><p>Track income and transactions — all in PKR</p></div>
+      <div class="metrics" style="grid-template-columns:repeat(3,1fr)">
+        <div class="metric"><div class="m-val" style="color:var(--em)">PKR 0</div><div class="m-lbl">Total Earned</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--amber)">PKR 0</div><div class="m-lbl">Pending</div></div>
+        <div class="metric"><div class="m-val" style="color:var(--blue)">PKR 0</div><div class="m-lbl">In Escrow</div></div>
+      </div>
+      <div class="section-card"><h3>Transaction History</h3><div style="text-align:center;padding:28px 0;font-size:0.84rem;color:var(--text4)">No transactions yet. Complete tasks to see earnings here.</div></div>`;
+  } else if(s==='payment'){
+    main.innerHTML=`
+      <div class="dash-hd"><h1>Payment Method</h1><p>Receive payments in PKR</p></div>
+      <div class="card" style="max-width:560px">
+        <div class="pm-tabs">
+          <div class="pm-tab active" onclick="pmTab(this,'jazzcash')"><span class="pm-tab-icon">💚</span><span class="pm-tab-name">JazzCash</span></div>
+          <div class="pm-tab" onclick="pmTab(this,'bank')"><span class="pm-tab-icon">🏦</span><span class="pm-tab-name">Bank Transfer</span></div>
+        </div>
+        <div id="pm-jazzcash">
+          <div class="alert alert-green">JazzCash is the recommended payment method on TaskBuddies. Fast, secure, PKR only.</div>
+          <div class="form-group"><label>JazzCash Mobile Number *</label><input type="tel" id="jc-num" placeholder="03XX-XXXXXXX" value="${u.phone||''}"><div class="form-hint">Must match your JazzCash registered number</div></div>
+          <div class="form-group"><label>Account Holder Name</label><input type="text" id="jc-name" placeholder="${u.name}" value="${u.name}"></div>
+        </div>
+        <div id="pm-bank" class="hidden">
+          <div class="form-group"><label>Bank Name *</label><input type="text" id="bk-name" placeholder="e.g. HBL, MCB, Meezan, UBL, NBP"></div>
+          <div class="form-group"><label>Account Number (IBAN) *</label><input type="text" id="bk-acc" placeholder="PK00XXXX0000000000000000"><div class="form-hint">24-digit IBAN starting with PK</div></div>
+          <div class="form-2col">
+            <div class="form-group"><label>Account Title</label><input type="text" placeholder="${u.name}"></div>
+            <div class="form-group"><label>Branch Code</label><input type="text" placeholder="e.g. 0001"></div>
+          </div>
+        </div>
+        <div class="wallet-card">
+          <div class="wallet-lbl">Available Balance</div>
+          <div class="wallet-bal">PKR 0.00</div>
+          <div class="wallet-sub">Your earnings will appear here</div>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="toast('Payment method saved! 💳','success')">Save Payment Method</button>
+      </div>`;
+  } else if(s==='profile'){
+    main.innerHTML=`
+      <div class="dash-hd"><h1>My Profile</h1><p>Manage your public profile</p></div>
+      <div class="section-card">
+        <div style="display:flex;align-items:center;gap:18px;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border)">
+          <div class="ds-av" style="width:66px;height:66px;font-size:1.4rem">${u.initials||u.name[0]||'U'}</div>
+          <div><div style="font-family:'Fraunces',serif;font-size:1.15rem;font-weight:900;color:var(--text)">${u.name}</div>
+          <div style="color:var(--text4);font-size:0.84rem;margin-top:3px">${u.email}</div>
+          <span class="badge badge-em" style="margin-top:7px">${u.role==='worker'?'Task Worker':'Task Poster'}</span></div>
+        </div>
+        <div class="form-2col"><div class="form-group"><label>Full Name</label><input type="text" value="${u.name}"></div><div class="form-group"><label>City</label><input type="text" value="${u.city||''}" placeholder="Lahore, Karachi..."></div></div>
+        <div class="form-group"><label>Bio / Skills</label><textarea rows="3" placeholder="Describe your skills, experience, and specialties..."></textarea></div>
+        <div class="form-2col"><div class="form-group"><label>Phone / JazzCash</label><input type="tel" value="${u.phone||''}" placeholder="03XX-XXXXXXX"></div><div class="form-group"><label>Hourly Rate (PKR)</label><input type="number" placeholder="e.g. 1500"></div></div>
+        <button class="btn btn-primary" onclick="toast('Profile saved! ✓','success')">Save Changes</button>
+      </div>`;
+  } else if(s==='settings'){
+    main.innerHTML=`
+      <div class="dash-hd"><h1>Settings</h1><p>Manage account preferences</p></div>
+      <div class="section-card" style="margin-bottom:14px">
+        <h3>Notifications</h3>
+        ${['Email when someone applies to my task','Email when my application status changes','Weekly digest of new tasks'].map((n,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border)"><span style="font-size:0.86rem;color:var(--text2)">${n}</span><input type="checkbox" ${i<2?'checked':''} style="accent-color:var(--em);width:17px;height:17px"></div>`).join('')}
+      </div>
+      <div class="section-card">
+        <h3>Appearance</h3>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0">
+          <span style="font-size:0.86rem;color:var(--text2)">Dark / Light Mode</span>
+          <button class="btn btn-subtle btn-sm" onclick="toggleTheme()">${isDark?'Switch to Light ☀️':'Switch to Dark 🌙'}</button>
+        </div>
+      </div>
+      <div class="section-card">
+        <h3 style="color:var(--red)">Danger Zone</h3>
+        <button class="btn btn-danger" onclick="if(confirm('Delete account? This cannot be undone.'))deleteAccount()">Delete Account</button>
+      </div>`;
+  }
+}
+async function deleteMyTask(id){
+  if(!confirm('Delete this task? This cannot be undone and will also remove all applications.')) return;
+  try {
+    await api('/tasks/'+id,'DELETE');
+    toast('Task deleted','success');
+    renderDash('my-tasks');
+  } catch(err){ toast(err.message||'Could not delete task','error'); }
+}
+async function withdrawApp(id){
+  if(!confirm('Withdraw this application?')) return;
+  try {
+    await api('/tasks/applications/'+id+'/withdraw','DELETE');
+    toast('Application withdrawn','success');
+    renderDash('apps');
+  } catch(err){ toast(err.message||'Could not withdraw application','error'); }
+}
+
+// ======= VIEW APPLICANTS (task owner) =======
+async function viewApplicants(taskId, taskTitle){
+  document.getElementById('applicantsTaskLabel').textContent = taskTitle;
+  const list = document.getElementById('applicantsList');
+  list.innerHTML = '<div style="text-align:center;padding:30px 0;color:var(--text4)">Loading...</div>';
+  openModal('applicants');
+  try {
+    const apps = await api('/tasks/'+taskId+'/applications');
+    if(apps.length === 0){
+      list.innerHTML = `<div style="text-align:center;padding:40px 0">
+        <div style="font-size:2rem;margin-bottom:12px">📭</div>
+        <div style="font-family:'Fraunces',serif;font-weight:700;color:var(--text2);margin-bottom:6px">No applicants yet</div>
+        <div style="font-size:0.83rem;color:var(--text4)">Workers will appear here once they apply</div>
+      </div>`;
+      return;
+    }
+    list.innerHTML = apps.map(a => {
+      const initials = (a.applicant?.name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+      const statusColor = a.status==='accepted'?'green':a.status==='rejected'?'red':'amber';
+      return `<div style="border:1px solid var(--border);border-radius:var(--r2);padding:18px;margin-bottom:12px;background:var(--surface)">
+        <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:12px">
+          <div class="app-av" style="width:44px;height:44px;flex-shrink:0;font-size:0.85rem">${initials}</div>
+          <div style="flex:1">
+            <div style="font-weight:700;color:var(--text);margin-bottom:2px">${a.applicant?.name||'Unknown'}</div>
+            <div style="font-size:0.75rem;color:var(--text4)">${a.applicant?.city||''} &nbsp;·&nbsp; Applied ${timeAgo(new Date(a.createdAt).getTime())}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div style="font-family:'Fraunces',serif;font-weight:900;color:var(--em);font-size:1.05rem">${pkr(a.rate)}</div>
+            <span class="badge badge-${statusColor}" style="margin-top:4px">${a.status}</span>
+          </div>
+        </div>
+        ${a.estimatedTime?`<div style="font-size:0.76rem;color:var(--text4);margin-bottom:8px">⏱️ Est. completion: <strong>${a.estimatedTime}</strong></div>`:''}
+        ${a.experience?`<div style="font-size:0.76rem;color:var(--text4);margin-bottom:10px">🏅 Experience: <strong>${a.experience}</strong></div>`:''}
+        <div style="background:var(--surface2);border-radius:var(--r);padding:11px 14px;font-size:0.84rem;color:var(--text2);line-height:1.6;margin-bottom:14px">“${a.message}”</div>
+        ${a.status==='pending'?`
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn btn-subtle btn-sm" onclick="updateApplicant('${a._id}','rejected','${taskId}')">Reject</button>
+          <button class="btn btn-primary btn-sm" onclick="updateApplicant('${a._id}','accepted','${taskId}')">Accept</button>
+        </div>`:''}
+      </div>`;
+    }).join('');
+  } catch(err){
+    list.innerHTML = `<div style="text-align:center;padding:30px 0;color:var(--text4)">${err.message||'Could not load applicants'}</div>`;
+  }
+}
+
+async function updateApplicant(appId, newStatus, taskId){
+  if(newStatus === 'accepted'){
+    if(!confirm('Accept this worker? All other pending applications will be removed and the task will be marked as assigned.')) return;
+    try {
+      const data = await api('/tasks/applications/'+appId+'/accept','PATCH');
+      // Show worker contact info in the modal
+      const list = document.getElementById('applicantsList');
+      const w = data.worker;
+      list.innerHTML = `
+        <div style="background:var(--surface2);border:1px solid var(--em);border-radius:var(--r2);padding:24px;text-align:center">
+          <div style="font-size:2rem;margin-bottom:10px">🎉</div>
+          <div style="font-family:'Fraunces',serif;font-weight:900;color:var(--em);font-size:1.1rem;margin-bottom:6px">Worker Accepted!</div>
+          <div style="font-size:0.84rem;color:var(--text4);margin-bottom:20px">Contact your worker to get started</div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:16px;text-align:left">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+              <div class="app-av" style="width:44px;height:44px;flex-shrink:0">${(w.name||'?').split(' ').map(x=>x[0]).join('').toUpperCase().slice(0,2)}</div>
+              <div><div style="font-weight:700;color:var(--text)">${w.name}</div><div style="font-size:0.75rem;color:var(--text4)">${w.city||''}</div></div>
+            </div>
+            ${w.phone?`<div style="font-size:0.84rem;color:var(--text2);margin-bottom:8px">📱 <strong>Phone / WhatsApp:</strong> ${w.phone}</div>`:''}
+            <div style="font-size:0.84rem;color:var(--text2)">📧 <strong>Email:</strong> ${w.email}</div>
+          </div>
+          <div style="font-size:0.76rem;color:var(--text4);margin-top:14px">The task is now marked as <strong>assigned</strong> and removed from Browse Tasks</div>
+        </div>`;
+      toast('Worker accepted! 🎉','success');
+      // Refresh My Tasks in background
+      if(document.querySelector('[data-s="my-tasks"].active')) renderDash('my-tasks');
+    } catch(err){ toast(err.message||'Could not accept applicant','error'); }
+  } else {
+    if(!confirm('Reject this applicant? Their application will be deleted.')) return;
+    try {
+      await api('/tasks/applications/'+appId+'/reject','DELETE');
+      toast('Applicant rejected and removed','success');
+      const taskTitle = document.getElementById('applicantsTaskLabel').textContent;
+      viewApplicants(taskId, taskTitle);
+    } catch(err){ toast(err.message||'Could not reject applicant','error'); }
+  }
+}
+function deleteAccount(){ if(confirm('Delete account? This cannot be undone.')){ doLogout(); toast('Account deleted'); } }
+
+// Payment tab
+function pmTab(el,id){ document.querySelectorAll('.pm-tab').forEach(t=>t.classList.remove('active')); el.classList.add('active'); ['jazzcash','bank'].forEach(x=>{ const el2=document.getElementById('pm-'+x); if(el2) el2.classList.toggle('hidden',x!==id); }); }
+
+// ======= ADMIN =======
+function adNav(el,s){ document.querySelectorAll('#page-admin .ds-item').forEach(x=>x.classList.remove('active')); el.classList.add('active'); renderAdmin(s); }
+async function renderAdmin(s){
+  const main=document.getElementById('adminMain'); if(!main) return;
+  // Fetch live data from API
+  let adminUsers=[], adminTasks=[], adminStats={totalUsers:0,totalTasks:0,openTasks:0};
+  try {
+    [adminUsers, adminTasks, adminStats] = await Promise.all([
+      api('/admin/users'),
+      api('/admin/tasks'),
+      api('/admin/dashboard')
+    ]);
+  } catch(e){ main.innerHTML=`<div class="section-card"><p style="color:var(--text4)">Could not load admin data. Make sure you have admin role.</p></div>`; return; }
+
+  const totalVolume=DB.apps.reduce((a,ap)=>a+ap.rate,0);
+  if(s==='aoverview'){
+    main.innerHTML=`
+      <div class="dash-hd"><h1>Admin Overview</h1><p>Platform health and activity</p></div>
+      <div class="metrics">
+        <div class="metric"><div class="m-icon" style="background:var(--em-ultra)">📋</div><div class="m-val">${adminStats.totalTasks}</div><div class="m-lbl">Total Tasks</div></div>
+        <div class="metric"><div class="m-icon" style="background:var(--blue-bg)">👥</div><div class="m-val">${adminStats.totalUsers}</div><div class="m-lbl">Users</div></div>
+        <div class="metric"><div class="m-icon" style="background:rgba(34,197,94,0.1)">✅</div><div class="m-val">${adminStats.openTasks}</div><div class="m-lbl">Open Tasks</div></div>
+      </div>
+      <div class="two-col">
+        <div class="section-card">
+          <h3>Recent Tasks</h3>
+          ${adminTasks.slice(0,5).map(t=>`<div class="app-item"><div class="app-av">${catIcon(t.category)}</div><div class="app-info"><div class="app-name">${(t.title||'').substring(0,36)}...</div><div class="app-sub">${t.postedBy?.name||'Unknown'} · ${pkr(t.budget)}</div></div><span class="badge badge-${t.status==='open'?'green':'gray'}">${t.status}</span></div>`).join('')||`<div style="text-align:center;padding:20px 0;color:var(--text4);font-size:0.84rem">No tasks yet</div>`}
+        </div>
+        <div class="section-card">
+          <h3>Platform Status</h3>
+          <div class="earn-row"><span class="earn-lbl">🟢 Users registered</span><span class="earn-val">${adminStats.totalUsers}</span></div>
+          <div class="earn-row"><span class="earn-lbl">🟢 Open tasks</span><span class="earn-val">${adminStats.openTasks}</span></div>
+          <div class="earn-row"><span class="earn-lbl">Currency</span><span style="font-weight:700;color:var(--text)">PKR only</span></div>
+        </div>
+      </div>`;
+  } else if(s==='atasks'){
+    main.innerHTML=`
+      <div class="dash-hd"><h1>All Tasks</h1><p>Review and moderate task listings</p></div>
+      ${adminTasks.length===0?`<div class="section-card"><div class="empty-state" style="padding:40px 0"><span class="es-icon">📋</span><h3 style="font-family:'Fraunces',serif">No tasks yet</h3></div></div>`:`
+      <div class="section-card" style="overflow:auto">
+        <table class="admin-table">
+          <thead><tr><th>Task</th><th>Category</th><th>Budget (PKR)</th><th>By</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>${adminTasks.map(t=>`<tr><td><strong>${(t.title||'').substring(0,36)}</strong></td><td><span class="badge badge-em">${t.category}</span></td><td style="color:var(--em);font-weight:700">PKR ${Number(t.budget).toLocaleString()}</td><td style="color:var(--text4)">${t.postedBy?.name||'—'}</td><td><span class="badge badge-${t.status==='open'?'green':'gray'}">${t.status}</span></td><td><button class="act-btn act-r" onclick="adRemoveTask('${t._id}')">Remove</button></td></tr>`).join('')}</tbody>
+        </table>
+      </div>`}`;
+  } else if(s==='ausers'){
+    main.innerHTML=`
+      <div class="dash-hd"><h1>Users (${adminUsers.length})</h1><p>All registered users</p></div>
+      ${adminUsers.length===0?`<div class="section-card"><div class="empty-state" style="padding:40px 0"><span class="es-icon">👥</span><h3 style="font-family:'Fraunces',serif">No users yet</h3></div></div>`:`
+      <div class="section-card" style="overflow:auto">
+        <table class="admin-table">
+          <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>City</th><th>Role</th><th>Actions</th></tr></thead>
+          <tbody>${adminUsers.map(u=>`<tr><td><div style="display:flex;align-items:center;gap:9px"><div class="app-av">${(u.name?.[0]||'?').toUpperCase()}</div><strong>${u.name}</strong></div></td><td style="color:var(--text4)">${u.email}</td><td style="color:var(--text4)">${u.phone||'—'}</td><td style="color:var(--text4)">${u.city||'—'}</td><td><span class="badge badge-${u.role==='admin'?'em':'blue'}">${u.role}</span></td><td><button class="act-btn act-r" onclick="adBanUser('${u._id}')">Remove</button></td></tr>`).join('')}</tbody>
+        </table>
+      </div>`}`;
+  } else if(s==='areports'){
+    main.innerHTML=`
+      <div class="dash-hd"><h1>Reports</h1><p>Platform analytics</p></div>
+      <div class="metrics" style="grid-template-columns:repeat(4,1fr)">
+        <div class="metric"><div class="m-val">${adminStats.openTasks}</div><div class="m-lbl">Open Tasks</div></div>
+        <div class="metric"><div class="m-val">${adminStats.totalUsers}</div><div class="m-lbl">Total Users</div></div>
+        <div class="metric"><div class="m-val">${adminStats.totalTasks}</div><div class="m-lbl">Total Tasks</div></div>
+        <div class="metric"><div class="m-val">${adminTasks.length?'PKR '+Math.round(adminTasks.reduce((a,t)=>a+t.budget,0)/adminTasks.length).toLocaleString():'—'}</div><div class="m-lbl">Avg Budget</div></div>
+      </div>
+      <div class="section-card"><h3>Category Breakdown</h3>
+        ${CATS.slice(0,6).map(c=>`<div class="earn-row"><span class="earn-lbl">${c.icon} ${c.name}</span><span class="earn-val">${adminTasks.filter(t=>t.category===c.name).length} tasks</span></div>`).join('')}
+      </div>`;
+  }
+}
+async function adRemoveTask(id){ if(confirm('Remove this task?')){ try{ await api('/admin/tasks/'+id,'DELETE'); DB.tasks=DB.tasks.filter(t=>t.id!==id&&t._id!==id); toast('Task removed','success'); renderAdmin('atasks'); updateHomeStats(); }catch(e){ toast(e.message,'error'); } } }
+async function adBanUser(id){ if(confirm('Remove this user?')){ try{ await api('/admin/users/'+id,'DELETE'); toast('User removed','success'); renderAdmin('ausers'); }catch(e){ toast(e.message,'error'); } } }
+
+// ======= MODALS =======
+function openModal(name){ document.getElementById('mod-'+name)?.classList.remove('hidden'); }
+function closeModal(name){ document.getElementById('mod-'+name)?.classList.add('hidden'); }
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.classList.add('hidden'); }));
+
+// ======= TOAST =======
+function toast(msg,type=''){
+  document.querySelectorAll('.toast').forEach(t=>t.remove());
+  const t=document.createElement('div');
+  t.className='toast'+(type?' '+type:'');
+  t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>{ t.style.transition='opacity 0.3s,transform 0.3s'; t.style.opacity='0'; t.style.transform='translateY(10px)'; setTimeout(()=>t.remove(),300); },3000);
+}
+
+// ======= HELPERS =======
+function timeAgo(ts){
+  if(!ts) return 'just now';
+  const diff=Date.now()-ts;
+  const m=Math.floor(diff/60000);
+  if(m<1) return 'just now';
+  if(m<60) return m+'m ago';
+  const h=Math.floor(m/60);
+  if(h<24) return h+'h ago';
+  return Math.floor(h/24)+'d ago';
+}
+
+// ======= INIT =======
+updateNav(); updateHomeStats(); buildCatGrid();
+</script>
+<!-- ========================================= -->
+<!-- STEP: PASTE YOUR GOOGLE CLIENT ID BELOW  -->
+<!-- ========================================= -->
+<script>
+  const GOOGLE_CLIENT_ID = '168188059123-3dt7fme7p4hc3eet3qm7s9dh1q5amkdb.apps.googleusercontent.com'; // <-- REPLACE THIS
+</script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+window.addEventListener('load', function(){
+  if(typeof google === 'undefined' || !GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID.includes('YOUR_GOOGLE')){
+    document.querySelectorAll('#google-btn-login, #google-btn-signup').forEach(el=>{
+      el.innerHTML='<p style="font-size:0.75rem;color:var(--text4);text-align:center">Add your Google Client ID to enable</p>';
+    });
+    return;
+  }
+  google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleGoogleSignIn });
+  ['google-btn-login','google-btn-signup'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) google.accounts.id.renderButton(el, { theme:'outline', size:'large', width:300, text:'signin_with' });
+  });
+});
+</script>
+</body>
+</html>
