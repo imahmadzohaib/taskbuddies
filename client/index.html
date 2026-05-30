@@ -814,6 +814,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:50px
       <div class="ds-item" data-s="settings" onclick="dsNav(this,'settings');closeDashSidebar()"><span class="ds-icon">⚙️</span>Settings</div>
       <div class="divider" style="margin:10px 0"></div>
       <div id="adminNavBtn" class="ds-item" onclick="goto('admin')" style="color:var(--blue);display:none"><span class="ds-icon">🔐</span>Admin Panel</div>
+    </div>
     <div class="dash-main" id="dashMain"></div>
   </div>
 </div>
@@ -975,9 +976,6 @@ applyTheme();
 
 // ======= NAV =======
 function goto(page){
-  closeMobMenu();
-  closeDashSidebar();
-  closeAdminSidebar();
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const el=document.getElementById('page-'+page);
   if(el) el.classList.add('active');
@@ -1306,8 +1304,6 @@ function updateNav(){
     const adminBtn=document.getElementById('adminNavBtn');
     if(adminBtn) adminBtn.style.display = u.role==='admin' ? 'flex' : 'none';
   }
-  // Keep mobile nav in sync
-  if(typeof updateMobNav === 'function') updateMobNav();
 }
 
 // ======= DASHBOARD =======
@@ -1751,19 +1747,45 @@ function closeAdminSidebar(){
   if(s){ s.classList.remove('mob-open'); document.body.style.overflow=''; }
 }
 
-// Update mobile nav state
-function updateMobNav(){
-  const u=DB.session;
-  document.getElementById('mobUserSection')?.classList.toggle('hidden',!u);
-  document.getElementById('mobGuestActions')?.classList.toggle('hidden',!!u);
-  document.getElementById('mobUserActions')?.classList.toggle('hidden',!u);
-  document.getElementById('mobDashNavBtn')?.classList.toggle('hidden',!u);
-  if(u){
-    const av=document.getElementById('mobNavAv');
-    const nm=document.getElementById('mobNavName');
-    if(av) av.textContent=(u.name?.[0]||'?').toUpperCase();
-    if(nm) nm.textContent=u.name||'User';
-  }
+// Close mobile drawers on page navigation
+const _origGoto=typeof goto==='function'?goto:null;
+// Patch goto to always close mobile menus
+(function(){
+  const _g=window.goto;
+  if(_g) window.goto=function(p){
+    closeMobMenu();
+    closeDashSidebar();
+    closeAdminSidebar();
+    return _g(p);
+  };
+})();
+
+// Update mobile nav user state in drawer
+const _origUpdateNav=window.updateNav;
+if(_origUpdateNav){
+  window.updateNav=function(){
+    _origUpdateNav();
+    const u=DB.session;
+    const mobUser=document.getElementById('mobUserSection');
+    const mobGuest=document.getElementById('mobGuestActions');
+    const mobUserActs=document.getElementById('mobUserActions');
+    const mobDashBtn=document.getElementById('mobDashNavBtn');
+    const mobNavAv=document.getElementById('mobNavAv');
+    const mobNavName=document.getElementById('mobNavName');
+    if(u){
+      mobUser?.classList.remove('hidden');
+      mobGuest?.classList.add('hidden');
+      mobUserActs?.classList.remove('hidden');
+      mobDashBtn?.classList.remove('hidden');
+      if(mobNavAv) mobNavAv.textContent=(u.name?.[0]||'?').toUpperCase();
+      if(mobNavName) mobNavName.textContent=u.name||'User';
+    } else {
+      mobUser?.classList.add('hidden');
+      mobGuest?.classList.remove('hidden');
+      mobUserActs?.classList.add('hidden');
+      mobDashBtn?.classList.add('hidden');
+    }
+  };
 }
 </script>
 <!-- ========================================= -->
