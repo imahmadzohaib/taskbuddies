@@ -813,7 +813,11 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:50px
       <div class="ds-item" data-s="profile" onclick="dsNav(this,'profile');closeDashSidebar()"><span class="ds-icon">👤</span>Profile</div>
       <div class="ds-item" data-s="settings" onclick="dsNav(this,'settings');closeDashSidebar()"><span class="ds-icon">⚙️</span>Settings</div>
       <div class="divider" style="margin:10px 0"></div>
-      <div class="ds-item" onclick="goto('admin')" style="color:var(--blue)"><span class="ds-icon">🔐</span>Admin Panel</div>
+     ${DB.session?.role === 'admin' ? `
+  <div class="ds-item" onclick="goto('admin')" style="color:var(--blue)">
+    <span class="ds-icon">🔐</span>Admin Panel
+  </div>
+` : ''}
     </div>
     <div class="dash-main" id="dashMain"></div>
   </div>
